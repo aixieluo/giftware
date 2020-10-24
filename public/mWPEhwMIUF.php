@@ -21,6 +21,8 @@ if (!is_file(APP_PATH . 'admin/command/Install/install.lock')) {
     exit;
 }
 
+define('BIND_MODULE', 'admin');
+
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/base.php';
 
