@@ -2,6 +2,13 @@
 <div class="sidenav" id="sidebar-nav">
     {:hook('user_sidenav_before')}
     <ul class="list-group">
+        <li class="list-group-heading">单号管理</li>
+        <li class="list-group-item {:check_nav_active('gift/buy')}"> <a href="{:url('gift/buy')}"><i class="fa fa-shopping-cart fa-fw"></i>购买礼品</a> </li>
+        <li class="list-group-item {:check_nav_active('gift/orders')}"> <a href="{:url('gift/orders')}"><i class="fa fa-list fa-fw"></i>我的订单</a> </li>
+        <li class="list-group-item {:check_nav_active('user/sendinfo')}"> <a href="{:url('user/sendinfo')}"><i class="fa fa-address-card fa-fw"></i>发件信息</a> </li>
+        <li class="list-group-item {:check_nav_active('user/changepwd')}"> <a href="{:url('user/changepwd')}"><i class="fa fa-star fa-fw"></i>我的收藏</a> </li>
+    </ul>
+    <ul class="list-group">
         <li class="list-group-heading">{:__('Member center')}</li>
         <li class="list-group-item {:check_nav_active('user/index')}"> <a href="{:url('user/index')}"><i class="fa fa-user-circle fa-fw"></i> {:__('User center')}</a> </li>
         <li class="list-group-item {:check_nav_active('user/profile')}"> <a href="{:url('user/profile')}"><i class="fa fa-user-o fa-fw"></i> {:__('Profile')}</a> </li>

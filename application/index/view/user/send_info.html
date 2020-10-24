@@ -1,0 +1,49 @@
+<style>
+    .basicinfo {
+        margin: 15px 0;
+    }
+
+    .basicinfo .row > .col-xs-4 {
+        padding-right: 0;
+    }
+
+    .basicinfo .row > div {
+        margin: 5px 0;
+    }
+</style>
+<div id="content-container" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {include file="common/sidenav" /}
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="page-header">设置发货人信息</h2>
+                    <form id="sendinfo-form" class="form-horizontal nice-validator n-default n-bootstrap" role="form" data-toggle="validator" method="POST" action="">
+                        <div class="form-group">
+                            <label for="fren" class="control-label col-xs-12 col-sm-2">发件人:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="text" data-rule="required" class="form-control" id="fren" name="fren" value="{$user.fren}" placeholder="底单上显示">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fhao" class="control-label col-xs-12 col-sm-2">发件号码:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="text" data-rule="required;tel" class="form-control" id="fhao" name="fhao" value="{$user.fhao}" placeholder="底单上显示">
+                            </div>
+                        </div>
+
+                        <div class="form-group normal-footer">
+                            <label class="control-label col-xs-12 col-sm-2"></label>
+                            <div class="col-xs-12 col-sm-8">
+                                <button type="submit" class="btn btn-success btn-embossed">提交</button>
+<!--                                <button type="reset" class="btn btn-default btn-embossed">重置</button>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

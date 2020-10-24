@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use app\admin\model\Order;
 use think\Model;
 
 /**
@@ -134,5 +135,10 @@ class User extends Model
             }
         }
         return $level;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
     }
 }

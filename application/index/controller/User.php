@@ -10,6 +10,7 @@ use app\common\model\Attachment;
 use think\Config;
 use think\Cookie;
 use think\Hook;
+use think\Request;
 use think\Session;
 use think\Validate;
 
@@ -308,5 +309,28 @@ class User extends Frontend
         }
         $this->view->assign("mimetypeList", \app\common\model\Attachment::getMimetypeList());
         return $this->view->fetch();
+    }
+
+    public function sendInfo(Request $request)
+    {
+        $user = $this->auth->getUser();
+        if ($request->isPost()) {
+            $user->save($request->post());
+        }
+        $this->assign('user', $user);
+        return $this->fetch();
+    }
+
+    public function orders(Request $request)
+    {
+        $user = $this->auth->getUser();
+        $this->assign('orders', $user->orders);
+        $this->assign('auth', $this->auth);
+        return $this->fetch();
+    }
+
+    public function buy()
+    {
+        return $this->fetch();
     }
 }

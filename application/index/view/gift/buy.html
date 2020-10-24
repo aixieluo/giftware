@@ -1,0 +1,90 @@
+<style>
+    .basicinfo {
+        margin: 15px 0;
+    }
+
+    .basicinfo .row > .col-xs-4 {
+        padding-right: 0;
+    }
+
+    .basicinfo .row > div {
+        margin: 5px 0;
+    }
+</style>
+<div id="content-container" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {include file="common/sidenav" /}
+        </div>
+        <div class="col-md-9">
+            <ul class="nav nav-tabs" id="navtab">
+                <li class="active"><a href="javascript(viod(0));" data-toggle="tab">购买礼品</a></li>
+            </ul>
+            <div class="panel panel-default ">
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="one">
+                            <form name="form" role="form" id="adds-form" class="form-horizontal" method="GET" action="/gift/order">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-2">选择发货仓:</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <select class="form-control" name="sid" id="tsid" data-am-selected="{maxHeight:200,btnWidth:469}" data-rule="required" required="">
+                                            <option value="">请先选择发货仓库</option>
+                                            <option value="5" ptid="2">申通广州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.30</option>
+                                            <option value="4" ptid="2">圆通广州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.35</option>
+                                            <option value="20" ptid="2">圆通苏州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.50</option>
+                                            <option value="8" ptid="2">百世南通仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.90</option>
+                                            <option value="10" ptid="2">申通义乌仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.70</option>
+                                            <option value="6" ptid="2">圆通义乌仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.50</option>
+                                            <option value="11" ptid="2">圆通杭州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.35</option>
+                                            <option value="17" ptid="1">百世徐州仓 - 【支持菜鸟单号】 - 您的运费：2.90</option>
+                                            <option value="9" ptid="1">圆通南京仓 - 【支持菜鸟单号】 - 您的运费：3.10</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-2">选择礼品:</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <div class="radio">
+                                            <span><button type="button" id="fagoods" class="btn btn-danger fachoose" data-sid="0" data-input-id="c-goods_image" data-multiple="false"><i class="fa fa-list"></i> 选择礼品</button></span>
+                                        </div>
+                                        <input type="hidden" id="sgid" name="gid" value="" data-rule="required" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-2">商品图片:</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <div class="radio" id="platid">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-2">使用平台:</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <div class="radio" id="platids">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12 col-sm-2">地址说明:</label>
+                                    <div class="col-xs-12 col-sm-8">
+                                        <div class="b" style="color: red">注意：请核对好信息，礼品是真实发货，请核对好地址，出单号无法取消退款</div>
+                                    </div>
+                                </div>
+                                <div class="form-group layer-footer">
+                                    <label class="control-label col-xs-12 col-sm-2"></label>
+                                    <div class="col-xs-12 col-sm-4">
+                                        <input type="submit" class="btn btn-success btn-embossed" value="下一步">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
