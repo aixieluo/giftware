@@ -1,0 +1,150 @@
+<style>
+
+    .statistics {
+        padding: 10px 0;
+        margin: 0;
+    }
+
+    .statistics .col-xs-4 {
+        padding: 15px;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        border-right: 1px solid #eee;
+    }
+
+    .statistics .col-xs-4:last-child {
+        border-right: none;
+    }
+
+    .statistics .statistics-text {
+        color: #ff7243;
+    }
+
+    .statistics .statistics-nums {
+        font-size: 16px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .statistics.withline {
+        border: none
+    }
+
+    .statistics.withline > div {
+        border-right: 1px solid #eee
+    }
+
+    .statistics.withline > div:last-child, .thumbnail {
+        border: none
+    }
+
+    .score-info em {
+        font-size: 30px;
+        font-style: normal;
+        margin: 0 5px;
+    }
+
+    .meta-data {
+        padding: 5px 0;
+        color: #888;
+    }
+
+    .meta-data em {
+        font-style: normal;
+
+    }
+
+    .exchange-form textarea{
+        display:block;
+        height:65px;
+    }
+
+    main.content {
+        padding: 0 !important;
+    }
+</style>
+
+<link href="__CDN__/assets/css/origin/frontend.min.css" rel="stylesheet">
+<link href="__CDN__/assets/css/origin/main.css" rel="stylesheet">
+
+<div class="pix_section pix-padding-v-75 dark-red-bg" id="section_call_to_action_1" style="background-image: url('https://cdn.fastadmin.net/assets/images/company/intro-company-pattern.png'); background-repeat: repeat-x;background-size: cover;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-xs-12 col-sm-10 column ui-droppable">
+                <div class="pix-content">
+                    <h1 class="pix-white pix-no-margin-top pix-sm-lineheight pix-margin-bottom-20" style="text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);">
+                        <span class="pix_edit_text"><b style="color: #FFF">精选商品</b></span>
+                    </h1>
+                    <h5 class="pix-black-gray-light pix-margin-bottom-30" style="padding: 15px 0">
+                        <span class="pix_edit_text" style="color:#fff;font-size: 20px">全国多仓发货</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pix_section pix_nav_menu pix_scroll_header normal pix-padding-v-10" data-scroll-bg="#fff" id="section_headers_1" style="display: block;padding-bottom:0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-xs-12 pix-inner-col col-sm-9 column ui-droppable">
+                <div class="pix-content">
+                    <nav class="navbar navbar-default pix-no-margin-bottom pix-navbar-default">
+
+                        <div class="navbar-header">
+                            <div style="margin:-15px;">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pix-navbar-collapse" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="collapse navbar-collapse" id="pix-navbar-collapse" style="padding-left:0;">
+                            <ul class="nav navbar-nav media-middle pix-header-nav pix-adjust-height" id="pix-header-nav" style="margin-top: 3px;">
+                                <li class=""><a href="/index/gift/index.html" class="pix-gray">全部</a></li>
+                                <li class=""><a href="javascript:" style="cursor: initial;">&gt;</a></li>
+                                <li class=""><a href="/index/gift/index.html" class="pix-gray">实物商品</a></li>
+                                <li class=""><a href="javascript:" style="cursor: initial;">&gt;</a></li>
+                                <li class=""><a href="javascript:" class="pix-gray">详情</a></li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="blog-intro-section section pix-padding-v-10">
+    <div class="container">
+        <div class="panel panel-default panel-author">
+            <div class="panel-body pix-padding-top-30">
+                <div class="col-md-5">
+                    <img src="{$gift.image}" class="img-responsive" alt="">
+                </div>
+                <div class="col-md-7">
+                    <h1 class="my-3" style="line-height:inherit;font-size:24px;">{$gift.name}</h1>
+                    <div class="row mt-2">
+                        <div class="col-xs-12 col-md-4">
+                            <div class="my-4">
+                                <a href="javascript:" class="btn dark-red-bg wide pix-white secondary-font normal pix-animate-in btn-lg btn-block btn-exchange" data-id="14">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panel-author">
+            <div class="panel-heading">
+                <h4 style="font-size:16px;line-height: inherit;margin:0;">
+                    <i class="fa fa-fw fa-list"></i> 物品详情
+                </h4>
+            </div>
+            <div class="panel-body">
+                {$gift.info}
+            </div>
+        </div>
+    </div>
+</div>
