@@ -19,9 +19,25 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-2">{:__('Support')}:</label>
+        <label class="control-label col-xs-12 col-sm-2">{:__('Cn')}:</label>
         <div class="col-xs-12 col-sm-8">
-            <input id="c-support" data-rule="required" class="form-control" name="row[support]" type="number" value="{$row.support|htmlentities}">
+            <label><input id="c-cn" data-rule="required" {:check_active($row.cn, 0, 'checked')} class="" name="row[cn]" type="radio" value="0">不支持</label>
+            <label><input id="c-cn2" data-rule="required" {:check_active($row.cn, 1, 'checked')} class="" name="row[cn]" type="radio" value="1">支持</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Pdd')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <label><input id="c-pdd" data-rule="required" {:check_active($row.pdd, 0, 'checked')} class="" name="row[pdd]" type="radio" value="0">不支持</label>
+            <label><input id="c-pdd2" data-rule="required" {:check_active($row.pdd, 1, 'checked')} class="" name="row[pdd]" type="radio" value="1">支持</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('gift')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {volist name="gifts" id="gift"}
+            <label><input id="c-gift{$gift.id}" data-rule="required" {:in_array_active($gift.id, $row.gids, 'checked')} class="" name="row[gift][]" type="checkbox" value="{$gift.id}">{$gift.name}</label>
+            {/volist}
         </div>
     </div>
     <div class="form-group">

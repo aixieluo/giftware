@@ -361,6 +361,20 @@ if (!function_exists('check_nav_active')) {
     }
 }
 
+if (!function_exists('check_active')) {
+    function check_active($v1, $v2, $str = 'selected')
+    {
+        return $v1 == $v2 ? $str : '';
+    }
+}
+
+if (!function_exists('in_array_active')) {
+    function in_array_active($v1, $v2, $str = 'selected')
+    {
+        return in_array($v1, $v2) ? $str : '';
+    }
+}
+
 if (!function_exists('check_cors_request')) {
     /**
      * 跨域检测

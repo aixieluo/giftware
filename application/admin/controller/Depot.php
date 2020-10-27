@@ -11,7 +11,7 @@ use app\common\controller\Backend;
  */
 class Depot extends Backend
 {
-    
+
     /**
      * Depot模型对象
      * @var \app\admin\model\Depot
@@ -35,6 +35,20 @@ class Depot extends Backend
      * 因此在当前控制器中可不用编写增删改查的代码,除非需要自己控制这部分逻辑
      * 需要将application/admin/library/traits/Backend.php中对应的方法复制到当前控制器,然后进行修改
      */
-    
 
+    public function edit($ids = null)
+    {
+        $this->assign('gifts', \app\admin\model\Gift::all());
+        if ($this->request->isPost()) {
+            if (!is_array($ids) && $ids) {
+                $gift = $this->request->post('row.gift/a');
+                if (! $gift[0]) {
+                    $gift = [];
+                }
+                $depot = \app\admin\model\Depot::get($ids);
+                $depot->gifts()->sync($gift);
+            }
+        }
+        return parent::edit($ids);
+    }
 }

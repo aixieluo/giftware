@@ -28,9 +28,11 @@
                                 <div class="form-group">
                                     <label class="control-label col-xs-12 col-sm-2">选择发货仓:</label>
                                     <div class="col-xs-12 col-sm-8">
-                                        <select class="form-control" name="sid" id="tsid" data-am-selected="{maxHeight:200,btnWidth:469}" data-rule="required" required="">
-                                            <option value="">请先选择发货仓库</option>
-                                            <option value="5" ptid="2">申通广州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.30</option>
+                                        <select class="form-control" name="depot_id" id="tsid" value="1" data-am-selected="{maxHeight:200,btnWidth:469}" onchange="location.href=`/index/gift/buy/depot_id/${this.value}.html`" data-rule="required" required="">
+                                            <option value="0">请先选择发货仓库</option>
+                                            {volist name="depots" id="depot"}
+                                            <option value="{$depot.id}" {}>{$depot.name} - 【】 - {$depot.note}</option>
+                                            {/volist}
                                             <option value="4" ptid="2">圆通广州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.35</option>
                                             <option value="20" ptid="2">圆通苏州仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.50</option>
                                             <option value="8" ptid="2">百世南通仓 - 【支持菜鸟单号、拼多多单号】 - 您的运费：2.90</option>

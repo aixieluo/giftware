@@ -77,8 +77,12 @@ class Gift extends Frontend
         return $this->fetch();
     }
 
-    public function buy()
+    public function buy(Request $request)
     {
+        $d = Depot::get($request->param('depot_id'));
+        $this->assign('depot_id', $request->param('depot_id'));
+        $this->assign('depots', Depot::all());
+        $this->assign('gifts', $d ? $d->gifts : []);
         return $this->fetch();
     }
 
