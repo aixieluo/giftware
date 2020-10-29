@@ -8,13 +8,13 @@ use think\Model;
 class Gift extends Model
 {
 
-    
 
-    
+
+
 
     // 表名
     protected $name = 'gift';
-    
+
     // 自动写入时间戳字段
     protected $autoWriteTimestamp = false;
 
@@ -27,9 +27,12 @@ class Gift extends Model
     protected $append = [
 
     ];
-    
 
-    
+
+    public function depots()
+    {
+        return $this->belongsToMany(Depot::class, 'gift_depot');
+    }
 
 
 

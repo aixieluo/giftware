@@ -3,11 +3,13 @@
 namespace app\index\controller;
 
 use app\admin\model\Depot;
+use app\admin\model\Order;
 use app\common\controller\Frontend;
 use think\Config;
 use think\Cookie;
 use think\Hook;
 use think\Request;
+use think\Response;
 
 /**
  * 礼品
@@ -22,6 +24,7 @@ class Gift extends Frontend
     {
         parent::_initialize();
         $auth = $this->auth;
+        $this->assign('auth', $auth);
 
         if (! Config::get('fastadmin.usercenter')) {
             $this->error(__('User center already closed'));
@@ -72,6 +75,14 @@ class Gift extends Frontend
     public function orders(Request $request)
     {
         $user = $this->auth->getUser();
+        if ($request->isAjax()) {
+            $orders = Order::where('user_id', $this->auth->getUser()['id'])->paginate($request->get('limit'), false, [
+                'page' => $request->get('offset') / $request->get('limit') + 1,
+            ]);
+            $data['rows'] = $orders->getCollection();
+            $data['total'] = $orders->total();
+            return Response::create($data, 'json');
+        }
         $this->assign('orders', $user->orders);
         $this->assign('auth', $this->auth);
         return $this->fetch();
@@ -86,23 +97,81 @@ class Gift extends Frontend
         return $this->fetch();
     }
 
-    public function order()
+    public function items(Request $request)
     {
+        if ($request->isAjax()) {
+            $list = Depot::get($request->get('depot_id'))->gifts()->paginate($request->get('limit'), false, [
+                'page' => $request->get('offset') / $request->get('limit') + 1,
+            ]);
+            $data['rows'] = $list->getCollection();
+            $data['total'] = $list->total();
+            return Response::create($data, 'json');
+        }
+
         return $this->fetch();
     }
 
-    public function upload()
+    protected function tabs(Request $request)
     {
+        $depot_id = $request->param('depot_id', $request->get('depot_id'));
+        $gift_id = $request->param('gift_id', $request->get('gift_id'));
+        $this->assign('depot_id', $depot_id);
+        $this->assign('gift_id', $gift_id);
+        $gift = \app\admin\model\Gift::get($gift_id);
+        $depot = Depot::get($depot_id);
+        $this->assign('gift', $gift);
+        $this->assign('depot', $depot);
+        return [$gift, $depot];
+    }
+
+    public function order(Request $request)
+    {
+        list($gift, $depot) = $this->tabs($request);
+        if (!$request->isPost()) {
+            return $this->fetch();
+        }
+        $addresses = $this->addresses($request->post('addstext'));
+        foreach ($addresses as $address) {
+            $this->storeOrder($this->auth->getUser(), $depot, $gift, $address, $request->post());
+        }
+        $this->redirect('index/gift/orders');
+    }
+
+    public function upload(Request $request)
+    {
+        list($gift, $depot) = $this->tabs($request);
         return $this->fetch();
     }
 
-    public function typeAuto()
+    public function typeAuto(Request $request)
     {
+        list($gift, $depot) = $this->tabs($request);
         return $this->fetch();
     }
 
-    public function typeOrder()
+    public function typeOrder(Request $request)
     {
+        list($gift, $depot) = $this->tabs($request);
         return $this->fetch();
+    }
+
+    protected function storeOrder(\app\common\model\User $user, Depot $depot, \app\admin\model\Gift $gift, $address, array $attr)
+    {
+        $o['sn'] = date("Ymdhis") . sprintf("%03d", $this->auth->getUser()['id']) . mt_rand(1000, 9999);
+        $o['total'] = $gift->price + $depot->price;
+        list($o['recipient'], $o['receipt_number'], $o['receipt_address']) = explode(',', $address);
+        $o['courier'] = '申通';
+        $o['plattype'] = $attr['type'];
+        $o['item'] = $gift->name;
+        $order = new Order($o);
+        $order->user_id = $user->id;
+        $order->gift_id = $gift->id;
+        $order->depot_id = $depot->id;
+        $order->save();
+    }
+
+    protected function addresses($addresses)
+    {
+        return explode("\r\n", $addresses);
     }
 }

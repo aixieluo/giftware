@@ -39,17 +39,17 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>双齿梳</td>
-                                                <td><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/shuzi.jpg" width="45px" height="45px"></td>
-                                                <td><span class="price">0.10</span></td>
-                                                <td><span class="express_price">2.35</span></td>
-                                                <td><span class="goods-price">0.10</span></td>
-                                                <td><span class="total-price">2.45</span></td>
+                                                <td>{$gift.name}</td>
+                                                <td><img src="{$gift.image}" width="45px" height="45px"></td>
+                                                <td><span class="price">{$gift.price}</span></td>
+                                                <td><span class="express_price">{$depot.price}</span></td>
+                                                <td><span class="goods-price">{$gift.price}</span></td>
+                                                <td><span class="total-price">{$gift.price + $depot.price}</span></td>
                                             </tr>
                                             </tbody>
                                         </table>
                                         <input type="hidden" id="num" name="num" value="1">
-                                        <input type="hidden" name="gid" value="26">
+                                        <input type="hidden" name="gift_id" value="{$gift_id}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -57,7 +57,7 @@
                                     <div class="col-xs-12 col-sm-8">
                                         <div class="radio">
                                             <label>
-                                                <input name="store_id" type="radio" value="4" checked="">圆通广州仓                  &nbsp;<span>发货地址:广东省广州市黄浦区九佛镇(14点18点各发一次,过点隔天发）</span>
+                                                <input name="depot_id" type="radio" value="{$depot_id}" checked="">{$depot.name}                  &nbsp;<span>发货地址:{$depot.address}({$depot.note}）</span>
                                             </label>
                                             <br>
                                         </div>
@@ -67,22 +67,22 @@
                                     <label class="control-label col-xs-12 col-sm-2">使用平台:</label>
                                     <div class="col-xs-12 col-sm-8">
                                         <div class="radio" id="platid">
-                                            <label class="col-sm-7 checkdiv"><input class="checkpt" name="plattype" type="radio" value="1"><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688 ）</label>
-                                            <label class="col-sm-6 checkdiv"><input class="checkpt" name="plattype" type="radio" value="2"><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>
+                                            <label class="col-sm-7 checkdiv"><input class="checkpt" name="type" type="radio" value="1"><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688 ）</label>
+                                            <label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" value="2"><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-xs-12 col-sm-2">是否收藏:</label>
-                                    <div class="col-xs-12 col-sm-8">
-                                        <div class="radio">
-                                            <label><input name="issc" type="radio" value="0" checked=""> 否</label>
-                                            <label><input name="issc" type="radio" value="1"> 是</label>
-                                            <label>收藏后可以在收藏夹里快速一键下单</label>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label class="control-label col-xs-12 col-sm-2">是否收藏:</label>-->
+<!--                                    <div class="col-xs-12 col-sm-8">-->
+<!--                                        <div class="radio">-->
+<!--                                            <label><input name="issc" type="radio" value="0" checked=""> 否</label>-->
+<!--                                            <label><input name="issc" type="radio" value="1"> 是</label>-->
+<!--                                            <label>收藏后可以在收藏夹里快速一键下单</label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <div class="form-group">
                                     <label class="control-label col-xs-12 col-sm-2">地址说明:</label>

@@ -39,13 +39,12 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td>双齿梳</td>
-                                                <td><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/shuzi.jpg" width="45px" height="45px"></td>
-
-                                                <td><span class="price">0.10</span></td>
-                                                <td><span class="express_price">2.35</span></td>
-                                                <td><span class="goods-price">0.10</span></td>
-                                                <td><span class="total-price">2.45</span></td>
+                                                <td>{$gift.name}</td>
+                                                <td><img src="{$gift.image}" width="45px" height="45px"></td>
+                                                <td><span class="price">{$gift.price}</span></td>
+                                                <td><span class="express_price">{$depot.price}</span></td>
+                                                <td><span class="goods-price">{$gift.price}</span></td>
+                                                <td><span class="total-price">{$gift.price + $depot.price}</span></td>
                                                 <td>
                                                     <input type="hidden" name="gid" value="26">
                                                     <input type="hidden" id="num" name="num" value="1">

@@ -29,6 +29,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'name', title: __('Name'), operate: 'LIKE'},
                         {field: 'address', title: __('Address'), operate: 'LIKE'},
                         {field: 'note', title: __('Note'), operate: 'LIKE'},
+                        {field: 'price', title: __('Price')},
                         {field: 'pdd', title: __('Pdd')},
                         {field: 'cn', title: __('Cn')},
                         {field: 'create_time', title: __('Create_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},

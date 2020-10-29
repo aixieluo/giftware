@@ -30,7 +30,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'sn', title: __('Sn'), operate: 'LIKE'},
                         {field: 'tb_sn', title: __('Tb_sn'), operate: 'LIKE'},
                         {field: 'pdd_sn', title: __('Pdd_sn'), operate: 'LIKE'},
-                        {field: 'type', title: __('Type'), operate: 'LIKE'},
+                        {field: 'plattype', title: __('Type'), operate: 'LIKE'},
                         {field: 'courier', title: __('Courier'), operate: 'LIKE'},
                         {field: 'total', title: __('Total'), operate:'BETWEEN'},
                         {field: 'item', title: __('Item'), operate: 'LIKE'},
@@ -38,7 +38,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'receipt_number', title: __('Receipt_number'), operate: 'LIKE'},
                         {field: 'receipt_address', title: __('Receipt_address'), operate: 'LIKE'},
                         {field: 'create_time', title: __('Create_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'update_time', title: __('Update_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

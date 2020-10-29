@@ -9,9 +9,6 @@ class Depot extends Model
 {
 
 
-
-
-
     // 表名
     protected $name = 'depot';
 
@@ -25,7 +22,9 @@ class Depot extends Model
 
     // 追加属性
     protected $append = [
-        'gids'
+        'gids',
+        'support',
+        'code',
     ];
 
     public function getGidsAttr()
@@ -36,5 +35,31 @@ class Depot extends Model
     public function gifts()
     {
         return $this->belongsToMany(Gift::class, 'gift_depot');
+    }
+
+    public function getSupportAttr()
+    {
+        $str = '支持';
+        if ($this->cn) {
+            $str .= '菜鸟单号';
+        }
+        if ($this->pdd) {
+            if ($this->cn) {
+                $str .= '、';
+            }
+            $str .= '拼多多单号';
+        }
+        return $str;
+    }
+
+    public function getCodeAttr()
+    {
+        if ($this->cn && $this->pdd) {
+            return 3;
+        } elseif ($this->cn) {
+            return 2;
+        } elseif ($this->pdd) {
+            return 1;
+        }
     }
 }
