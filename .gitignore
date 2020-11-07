@@ -2,7 +2,7 @@
 /thinkphp/
 /vendor/
 /runtime/*
-/addons/*
+#/addons/*
 /application/admin/command/Install/*.lock
 /public/assets/libs/
 /public/assets/addons/*
@@ -15,3 +15,5 @@ composer.lock
 .env
 .svn
 .vscode
+*/.DS_Store
+.DS_Store

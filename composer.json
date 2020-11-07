@@ -21,7 +21,6 @@
         "phpmailer/phpmailer": "~6.1.6",
         "karsonzhang/fastadmin-addons": "~1.2.4",
         "overtrue/pinyin": "~3.0",
-        "phpoffice/phpspreadsheet": "^1.2",
         "overtrue/wechat": "4.2.11",
         "nelexa/zip": "^3.3",
         "symfony/var-exporter": "^4.4.13",
@@ -29,7 +28,8 @@
         "ext-curl": "*",
         "ext-pdo": "*",
         "topthink/think-migration": "1.*",
-        "larapack/dd": "^1.1"
+        "larapack/dd": "^1.1",
+        "shuchkin/simplexlsx": "^0.8.19"
     },
     "config": {
         "preferred-install": "dist"

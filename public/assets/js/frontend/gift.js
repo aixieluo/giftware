@@ -49,14 +49,14 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
             $('#tsid').change(function () {
                 ptid = $('#tsid option:selected').attr('ptid')
                 if(ptid==3){
-                    var str='<label class="checkdiv"><input class="checkpt" name="ptid" type="radio" value="1" data-rule="checked">菜鸟单号（淘宝、天猫、1688）</label>';
-                    str=str+'<label class="checkdiv"><input class="checkpt" name="ptid" type="radio" value="2" data-rule="checked">拼多多电子（拼多多、京东可用）</label>'
+                    var str='<label class="checkdiv"><input class="checkpt" name="type" type="radio" value="1" data-rule="checked">菜鸟单号（淘宝、天猫、1688）</label>';
+                    str=str+'<label class="checkdiv"><input class="checkpt" name="type" type="radio" value="2" data-rule="checked">拼多多电子（拼多多、京东可用）</label>'
                     $("#platids").html(str);
                 }else if(ptid==2){
-                    var str='<label><input  name="ptid" type="radio" value="1" checked>菜鸟单号（淘宝、天猫、1688）</label>';
+                    var str='<label><input  name="type" type="radio" value="1" checked>菜鸟单号（淘宝、天猫、1688）</label>';
                     $("#platids").html(str);
-                }else{
-                    var str='<label><input  name="ptid" type="radio" value="3" checked>拼多多电子（拼多多、京东可用）</label>';
+                }else if (ptid==1){
+                    var str='<label><input  name="type" type="radio" value="2" checked>拼多多电子（拼多多、京东可用）</label>';
                     $("#platids").html(str);
                 }
             });
@@ -161,6 +161,15 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                 $("#addstext").val(addtext);
                 $('.btn-embossed').attr('disabled',false);
             });
+        },
+        upload() {
+            $("#faupload-image").data("upload-success", function (data) {
+                var url = Fast.api.cdnurl(data.url);
+                //  console.log('数组：', data);
+                $("#excel-msg").html('已选择：'+url);
+                // Toastr.success(__('Upload successful'));
+            });
+            Controller.api.bindevent()
         },
         api: {
             bindevent: function () {

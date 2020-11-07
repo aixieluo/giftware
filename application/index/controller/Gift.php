@@ -5,11 +5,20 @@ namespace app\index\controller;
 use app\admin\model\Depot;
 use app\admin\model\Order;
 use app\common\controller\Frontend;
+use Box\Spout\Common\Entity\Row;
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+use Box\Spout\Reader\SheetInterface;
+use Box\Spout\Reader\XLSX\Sheet;
+use Box\Spout\Reader\XLSX\SheetIterator;
+use Rap2hpoutre\FastExcel\Facades\FastExcel;
+use Spatie\SimpleExcel\SimpleExcelReader;
+use think\Collection;
 use think\Config;
 use think\Cookie;
 use think\Hook;
 use think\Request;
 use think\Response;
+use function EasyWeChat\Kernel\data_get;
 
 /**
  * 礼品
@@ -76,7 +85,7 @@ class Gift extends Frontend
     {
         $user = $this->auth->getUser();
         if ($request->isAjax()) {
-            $orders = Order::where('user_id', $this->auth->getUser()['id'])->paginate($request->get('limit'), false, [
+            $orders = Order::where('user_id', $this->auth->getUser()['id'])->order('id', 'desc')->paginate($request->get('limit'), false, [
                 'page' => $request->get('offset') / $request->get('limit') + 1,
             ]);
             $data['rows'] = $orders->getCollection();
@@ -115,13 +124,22 @@ class Gift extends Frontend
     {
         $depot_id = $request->param('depot_id', $request->get('depot_id'));
         $gift_id = $request->param('gift_id', $request->get('gift_id'));
+        $type = $request->param('type', $request->get('type'));
         $this->assign('depot_id', $depot_id);
         $this->assign('gift_id', $gift_id);
+        $this->assign('type', $type);
         $gift = \app\admin\model\Gift::get($gift_id);
         $depot = Depot::get($depot_id);
         $this->assign('gift', $gift);
         $this->assign('depot', $depot);
-        return [$gift, $depot];
+        return [$gift, $depot, $type];
+    }
+
+    protected function generateOrder($user, $depot, $gift, $addresses, $arr)
+    {
+        foreach ($addresses as $address) {
+            $this->storeOrder($this->auth->getUser(), $depot, $gift, $address, $arr);
+        }
     }
 
     public function order(Request $request)
@@ -131,16 +149,33 @@ class Gift extends Frontend
             return $this->fetch();
         }
         $addresses = $this->addresses($request->post('addstext'));
-        foreach ($addresses as $address) {
-            $this->storeOrder($this->auth->getUser(), $depot, $gift, $address, $request->post());
-        }
+        $this->generateOrder($this->auth->getUser(), $depot, $gift, $addresses, $request->post());
         $this->redirect('index/gift/orders');
     }
 
     public function upload(Request $request)
     {
         list($gift, $depot) = $this->tabs($request);
-        return $this->fetch();
+        if (! $request->isAjax()) {
+            return $this->fetch();
+        }
+        $addresses = $this->getAddresses($request->post('excel'));
+        $this->generateOrder($this->auth->getUser(), $depot, $gift, $addresses, $request->post());
+        $this->redirect('index/gift/orders');
+    }
+
+    public function getAddresses($file)
+    {
+        $file = './uploads/20201107/466f3c4af0a609bf28a28b3f9d8dfd2f.xlsx';
+        $xlsx = \SimpleXLSX::parse($file);
+        $header_values = $rows = [];
+        foreach ( $xlsx->rows() as $k => $r ) {
+            if ( $k === 0 ) {
+                $header_values = $r;
+                continue;
+            }
+            $rows[] = array_combine( $header_values, $r );
+        }
     }
 
     public function typeAuto(Request $request)
@@ -160,7 +195,7 @@ class Gift extends Frontend
         $o['sn'] = date("Ymdhis") . sprintf("%03d", $this->auth->getUser()['id']) . mt_rand(1000, 9999);
         $o['total'] = $gift->price + $depot->price;
         list($o['recipient'], $o['receipt_number'], $o['receipt_address']) = explode(',', $address);
-        $o['courier'] = '申通';
+        $o['courier'] = '圆通';
         $o['plattype'] = $attr['type'];
         $o['item'] = $gift->name;
         $order = new Order($o);
