@@ -135,10 +135,11 @@ class Gift extends Frontend
         return [$gift, $depot, $type];
     }
 
-    protected function generateOrder($user, $depot, $gift, $addresses, $arr)
+    protected function generateOrder($depot, $gift, $list, $arr)
     {
-        foreach ($addresses as $address) {
-            $this->storeOrder($this->auth->getUser(), $depot, $gift, $address, $arr);
+        foreach ($list as $item) {
+            $arr['sn'] = data_get($item, 'sn');
+            $this->storeOrder($this->auth->getUser(), $depot, $gift, $item['address'], $arr);
         }
     }
 
@@ -149,7 +150,7 @@ class Gift extends Frontend
             return $this->fetch();
         }
         $addresses = $this->addresses($request->post('addstext'));
-        $this->generateOrder($this->auth->getUser(), $depot, $gift, $addresses, $request->post());
+        $this->generateOrder($depot, $gift, $addresses, $request->post());
         $this->redirect('index/gift/orders');
     }
 
@@ -160,15 +161,16 @@ class Gift extends Frontend
             return $this->fetch();
         }
         $addresses = $this->getAddresses($request->post('excel'));
-        $this->generateOrder($this->auth->getUser(), $depot, $gift, $addresses, $request->post());
+        $this->generateOrder($depot, $gift, $addresses, $request->post());
         $this->redirect('index/gift/orders');
     }
 
     public function getAddresses($file)
     {
-        $file = './uploads/20201107/466f3c4af0a609bf28a28b3f9d8dfd2f.xlsx';
+        $file = ROOT_PATH . 'public' . $file;
         $xlsx = \SimpleXLSX::parse($file);
         $header_values = $rows = [];
+        dd($xlsx);
         foreach ( $xlsx->rows() as $k => $r ) {
             if ( $k === 0 ) {
                 $header_values = $r;
@@ -176,6 +178,12 @@ class Gift extends Frontend
             }
             $rows[] = array_combine( $header_values, $r );
         }
+        $data = [];
+        foreach ($rows as $key => $row) {
+            $data[$key]['address'] = $row['收货人姓名'] . ',' . $row['收货人手机'] . ',' . $row['收货地址'];
+            $data[$key]['sn'] = $row['订单号'];
+        }
+        return $data;
     }
 
     public function typeAuto(Request $request)
@@ -192,7 +200,7 @@ class Gift extends Frontend
 
     protected function storeOrder(\app\common\model\User $user, Depot $depot, \app\admin\model\Gift $gift, $address, array $attr)
     {
-        $o['sn'] = date("Ymdhis") . sprintf("%03d", $this->auth->getUser()['id']) . mt_rand(1000, 9999);
+        $o['sn'] = data_get($attr, 'sn', date("Ymdhis") . sprintf("%03d", $this->auth->getUser()['id']) . mt_rand(1000, 9999));
         $o['total'] = $gift->price + $depot->price;
         list($o['recipient'], $o['receipt_number'], $o['receipt_address']) = explode(',', $address);
         $o['courier'] = '圆通';
@@ -207,6 +215,10 @@ class Gift extends Frontend
 
     protected function addresses($addresses)
     {
-        return explode("\r\n", $addresses);
+        $data = [];
+        foreach (explode("\r\n", $addresses) as $address) {
+            $data[]['address'] = $address;
+        }
+        return $data;
     }
 }
