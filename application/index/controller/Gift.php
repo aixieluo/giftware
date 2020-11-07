@@ -18,6 +18,7 @@ use think\Cookie;
 use think\Hook;
 use think\Request;
 use think\Response;
+use think\response\Json;
 use function EasyWeChat\Kernel\data_get;
 
 /**
@@ -151,7 +152,11 @@ class Gift extends Frontend
         }
         $addresses = $this->addresses($request->post('addstext'));
         $this->generateOrder($depot, $gift, $addresses, $request->post());
-        $this->redirect('index/gift/orders');
+        return Json::create([
+            'msg' => '下单成功',
+            'url' => url('index/gift/orders'),
+            'code' => 302
+        ]);
     }
 
     public function upload(Request $request)
@@ -162,7 +167,11 @@ class Gift extends Frontend
         }
         $addresses = $this->getAddresses($request->post('excel'));
         $this->generateOrder($depot, $gift, $addresses, $request->post());
-        $this->redirect('index/gift/orders');
+        return Json::create([
+            'msg' => '下单成功',
+            'url' => url('index/gift/orders'),
+            'code' => 302
+        ]);
     }
 
     public function getAddresses($file)
@@ -170,7 +179,6 @@ class Gift extends Frontend
         $file = ROOT_PATH . 'public' . $file;
         $xlsx = \SimpleXLSX::parse($file);
         $header_values = $rows = [];
-        dd($xlsx);
         foreach ( $xlsx->rows() as $k => $r ) {
             if ( $k === 0 ) {
                 $header_values = $r;
@@ -179,9 +187,27 @@ class Gift extends Frontend
             $rows[] = array_combine( $header_values, $r );
         }
         $data = [];
-        foreach ($rows as $key => $row) {
-            $data[$key]['address'] = $row['收货人姓名'] . ',' . $row['收货人手机'] . ',' . $row['收货地址'];
-            $data[$key]['sn'] = $row['订单号'];
+        if (isset($rows[0]['省'])) {
+            foreach ($rows as $key => $row) {
+                $data[$key]['address'] =
+                    $row['收货人'] .
+                    ',' .
+                    $row['手机'] .
+                    ',' .
+                    $row['省'] .
+                    ' ' .
+                    $row['市'] .
+                    ' ' .
+                    $row['区'] .
+                    '' .
+                    $row['街道'];
+                $data[$key]['sn'] = $row['订单号'];
+            }
+        } else {
+            foreach ($rows as $key => $row) {
+                $data[$key]['address'] = $row['收货人姓名'] . ',' . $row['收货人手机'] . ',' . $row['收货地址'];
+                $data[$key]['sn'] = $row['订单号'];
+            }
         }
         return $data;
     }
@@ -200,7 +226,7 @@ class Gift extends Frontend
 
     protected function storeOrder(\app\common\model\User $user, Depot $depot, \app\admin\model\Gift $gift, $address, array $attr)
     {
-        $o['sn'] = data_get($attr, 'sn', date("Ymdhis") . sprintf("%03d", $this->auth->getUser()['id']) . mt_rand(1000, 9999));
+        $o['sn'] = data_get($attr, 'sn') ?? date("Ymdhis") . sprintf("%03d", $this->auth->getUser()['id']) . mt_rand(1000, 9999);
         $o['total'] = $gift->price + $depot->price;
         list($o['recipient'], $o['receipt_number'], $o['receipt_address']) = explode(',', $address);
         $o['courier'] = '圆通';

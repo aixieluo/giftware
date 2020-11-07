@@ -417,3 +417,68 @@ if (!function_exists('xss_clean')) {
         return \app\common\library\Security::instance()->xss_clean($content, $is_image);
     }
 }
+
+if (! function_exists('kuaibao')) {
+    function kuaibao()
+    {
+        $host = "https://kop.kuaidihelp.com/test";
+        $headers = array();
+        //根据API的要求，定义相对应的Content-Type
+        array_push($headers, "Content-Type".":"."application/x-www-form-urlencoded; charset=UTF-8");
+        $appId = '107541';
+        $method = 'account.waybill.get';
+        $ts = time();
+        $appKey = '27a51dcfd28329d858b13df8dffa0ba7e0f7f7c5';
+        $bodys = [
+            "app_id" => $appId,
+            "method" => $method,
+            "sign" => md5($appId . $method . $ts . $appKey),
+            "ts" => $ts,
+            "data" => '{
+    "customer_name":"kuaibao888",
+    "customer_password":"1234567890",
+    "order_id":"KB101100111011233",
+    "trade_name":"智能手机",
+    "shipper_type":"yt",
+    "pay_type":"1",
+    "weight":"1.23",
+    "sender":{
+        "company":"南山区深圳软件产业基地",
+        "name":"张飞鸿",
+        "tel":"",
+        "mobile":"18688888888",
+        "province":"广东省",
+        "city":"深圳市",
+        "district":"南山区",
+        "address":"深圳软件产业基地"
+    },
+    "recipient":{
+        "company":"宝芝林贸易",
+        "name":"王三姨",
+        "tel":"95127777",
+        "mobile":"13666666666",
+        "province":"江苏省",
+        "city":"苏州市",
+        "district":"沧浪区",
+        "address":"人民路沧浪亭街31号宝芝林贸易有限公司"
+    }
+}'
+        ];
+        $bodys = http_build_query($bodys);
+        $url = $host;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_FAILONERROR, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        if (1 == strpos("$".$host, "https://"))
+        {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        }
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
+        dd(json_decode(curl_exec($curl)));
+    }
+}

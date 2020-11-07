@@ -161,6 +161,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                 $("#addstext").val(addtext);
                 $('.btn-embossed').attr('disabled',false);
             });
+            Controller.api.bindevent()
         },
         upload() {
             $("#faupload-image").data("upload-success", function (data) {
@@ -173,7 +174,14 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
         },
         api: {
             bindevent: function () {
-                Form.api.bindevent($("form[role=form]"));
+                Form.api.bindevent($("form[role=form]"), function (data, ret) {
+                }, function (data, ret) {
+                    setTimeout(function () {
+                        if (ret.code == 302) {
+                            location.href = ret.url
+                        }
+                    }, 1000)
+                });
             }
         },
         events: {

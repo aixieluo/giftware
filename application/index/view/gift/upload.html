@@ -22,7 +22,7 @@
                 <div class="panel-body">
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in" id="one">
-                            <form name="form" role="form" id="upload-form" class="form-horizontal nice-validator n-default n-bootstrap" method="POST" action="" novalidate="novalidate">
+                            <form name="form" role="form" id="upload-form" class="form-ajax form-horizontal nice-validator n-default n-bootstrap" method="POST" action="" novalidate="novalidate">
                                 <div class="form-group">
                                     <label class="control-label col-xs-12 col-sm-2">商品信息:</label>
                                     <div class="col-xs-12 col-sm-8">
@@ -82,14 +82,14 @@
                                     <label class="control-label col-xs-12 col-sm-2">导入说明:</label>
                                     <div class="col-xs-12 col-sm-8">
                                         <div class="b">淘宝拼多多后台导出的表格直接上传导入</div>
-                                        <div class="b">其他平台下载<a href="/daoru.xls" target="_blank">模板1</a>或者<a href="/daoru2.xls" target="_blank">模板2</a>模板导入</div>
+                                        <div class="b">其他平台下载<a href="/ex.xlsx" target="_blank">模板1</a>或者<a href="/ex2.xlsx" target="_blank">模板2</a>模板导入</div>
                                         <div class="b" style="color: red">注意：礼品是真实发货，请核对好地址，出单号无法取消退款</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-xs-12 col-sm-2">收货地址:</label>
                                     <div class="col-xs-12 col-sm-10">
-                                        <span><button type="button" id="faupload-image" class="btn btn-danger faupload" data-input-id="c-avatar" data-mimetype="csv,xls,xlsx" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 点击上传表格</button></span>
+                                        <span><button type="button" id="faupload-image" class="btn btn-danger faupload" data-input-id="c-avatar" data-mimetype="csv,xlsx" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 点击上传表格</button></span>
                                         <input type="hidden" name="excel" id="c-avatar" value="" data-rule="required">
                                         <span class="text-line" id="excel-msg"></span>
                                     </div>
