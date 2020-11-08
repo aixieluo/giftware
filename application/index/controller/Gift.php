@@ -140,8 +140,32 @@ class Gift extends Frontend
     {
         foreach ($list as $item) {
             $arr['sn'] = data_get($item, 'sn');
-            $this->storeOrder($this->auth->getUser(), $depot, $gift, $item['address'], $arr);
+            $order = $this->storeOrder($this->auth->getUser(), $depot, $gift, $item['address'], $arr);
+            kuaibao($order, $this->auth->getUser());
         }
+    }
+
+    protected function validMoney($total)
+    {
+
+    }
+
+    protected function lackMoney()
+    {
+        return Json::create([
+            'msg' => '余额不足',
+            'url' => '',
+            'code' => 400
+        ]);
+    }
+
+    public function orderSuccess()
+    {
+        return Json::create([
+            'msg' => '下单成功',
+            'url' => url('index/gift/orders'),
+            'code' => 302
+        ]);
     }
 
     public function order(Request $request)
@@ -151,12 +175,11 @@ class Gift extends Frontend
             return $this->fetch();
         }
         $addresses = $this->addresses($request->post('addstext'));
+        if (count($addresses) * $gift->price > $this->auth->getUser()->money) {
+            return $this->lackMoney();
+        }
         $this->generateOrder($depot, $gift, $addresses, $request->post());
-        return Json::create([
-            'msg' => '下单成功',
-            'url' => url('index/gift/orders'),
-            'code' => 302
-        ]);
+        return $this->orderSuccess();
     }
 
     public function upload(Request $request)
@@ -166,12 +189,11 @@ class Gift extends Frontend
             return $this->fetch();
         }
         $addresses = $this->getAddresses($request->post('excel'));
+        if (count($addresses) * $gift->price > $this->auth->getUser()->money) {
+            return $this->lackMoney();
+        }
         $this->generateOrder($depot, $gift, $addresses, $request->post());
-        return Json::create([
-            'msg' => '下单成功',
-            'url' => url('index/gift/orders'),
-            'code' => 302
-        ]);
+        return $this->orderSuccess();
     }
 
     public function getAddresses($file)
@@ -189,23 +211,25 @@ class Gift extends Frontend
         $data = [];
         if (isset($rows[0]['省'])) {
             foreach ($rows as $key => $row) {
-                $data[$key]['address'] =
-                    $row['收货人'] .
-                    ',' .
-                    $row['手机'] .
-                    ',' .
-                    $row['省'] .
-                    ' ' .
-                    $row['市'] .
-                    ' ' .
-                    $row['区'] .
-                    '' .
-                    $row['街道'];
+                $data[$key]['address'] = implode(',', [
+                    trim($row['收货人']),
+                    trim($row['手机']),
+                    implode(' ', [
+                        trim($row['省']),
+                        trim($row['市']),
+                        trim($row['区']),
+                        trim($row['街道'])
+                    ])
+                ]);
                 $data[$key]['sn'] = $row['订单号'];
             }
         } else {
             foreach ($rows as $key => $row) {
-                $data[$key]['address'] = $row['收货人姓名'] . ',' . $row['收货人手机'] . ',' . $row['收货地址'];
+                $data[$key]['address'] = implode(',', [
+                    trim($row['收货人姓名']),
+                    trim($row['收货人手机']),
+                    trim($row['收货地址']),
+                ]);
                 $data[$key]['sn'] = $row['订单号'];
             }
         }
@@ -237,6 +261,7 @@ class Gift extends Frontend
         $order->gift_id = $gift->id;
         $order->depot_id = $depot->id;
         $order->save();
+        return $order;
     }
 
     protected function addresses($addresses)
