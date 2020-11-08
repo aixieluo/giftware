@@ -29,9 +29,8 @@ class Recharge extends Frontend
         }
 
         $paytypeList = [];
-//        foreach (explode(',', $config['paytypelist']) as $index => $item) {
-        foreach (['alipay'] as $index => $item) {
-            $paytypeList[] = ['value' => $item, 'image' => '/assets/addons/recharge/img/' . $item . '.png', 'default' => $item === 'alipay'];
+        foreach (explode(',', $config['paytypelist']) as $index => $item) {
+            $paytypeList[] = ['value' => $item, 'image' => '/assets/addons/recharge/img/' . $item . '.png', 'default' => $item === $config['defaultpaytype']];
         }
         $this->view->assign('addonConfig', $config);
         $this->view->assign('moneyList', $moneyList);
