@@ -419,7 +419,7 @@ if (!function_exists('xss_clean')) {
 }
 
 if (! function_exists('kuaibao')) {
-    function kuaibao()
+    function kuaibao(\app\admin\model\Order $order, \app\common\model\User $user)
     {
         $host = "https://kop.kuaidihelp.com/test";
         $headers = array();
@@ -429,40 +429,38 @@ if (! function_exists('kuaibao')) {
         $method = 'account.waybill.get';
         $ts = time();
         $appKey = '27a51dcfd28329d858b13df8dffa0ba7e0f7f7c5';
+        $address = explode(' ', $order->receipt_address);
+        $address2 = explode(' ', $order->depot->address);
         $bodys = [
             "app_id" => $appId,
             "method" => $method,
-            "sign" => md5($appId . $method . $ts . $appKey),
-            "ts" => $ts,
-            "data" => '{
-    "customer_name":"kuaibao888",
-    "customer_password":"1234567890",
-    "order_id":"KB101100111011233",
-    "trade_name":"智能手机",
-    "shipper_type":"yt",
-    "pay_type":"1",
-    "weight":"1.23",
-    "sender":{
-        "company":"南山区深圳软件产业基地",
-        "name":"张飞鸿",
-        "tel":"",
-        "mobile":"18688888888",
-        "province":"广东省",
-        "city":"深圳市",
-        "district":"南山区",
-        "address":"深圳软件产业基地"
-    },
-    "recipient":{
-        "company":"宝芝林贸易",
-        "name":"王三姨",
-        "tel":"95127777",
-        "mobile":"13666666666",
-        "province":"江苏省",
-        "city":"苏州市",
-        "district":"沧浪区",
-        "address":"人民路沧浪亭街31号宝芝林贸易有限公司"
-    }
-}'
+            "sign"   => md5($appId . $method . $ts . $appKey),
+            "ts"     => $ts,
+            "data"   => json_encode([
+                "customer_name"     => "kuaibao888",
+                "customer_password" => "1234567890",
+                "order_id"          => $order->real_sn,
+                "trade_name"        => $order->item,
+                "shipper_type"      => "yt",
+                "pay_type"          => "1",
+                "weight"            => $order->gift->weight,
+                "sender"            => [
+                    "name"     => $user->fren ?? $user->nickname,
+                    "mobile"   => $user->fhao ?? $user->mobile,
+                    "province" => $address2[0],
+                    "city"     => $address2[1],
+                    "district" => $address2[2],
+                    "address"  => $address2[3],
+                ],
+                "recipient"         => [
+                    "name"     => $order->recipient,
+                    "mobile"   => $order->receipt_number,
+                    "province" => $address[0],
+                    "city"     => $address[1],
+                    "district" => $address[2],
+                    "address"  => $address[3],
+                ],
+            ])
         ];
         $bodys = http_build_query($bodys);
         $url = $host;
@@ -479,6 +477,12 @@ if (! function_exists('kuaibao')) {
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         }
         curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
-        dd(json_decode(curl_exec($curl)));
+        $response = json_decode(curl_exec($curl));
+        if ($response->code === 0) {
+            $order->data('courier_sn', $response->data->result->waybill_no)->save();
+            $user->data('money', $user->money - $order->total)->save();
+        } else {
+            $order->data('courier_sn', '失败')->save();
+        }
     }
 }
