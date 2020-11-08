@@ -175,6 +175,11 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
         api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"), function (data, ret) {
+                    setTimeout(function () {
+                        if (ret.code == 302) {
+                            location.href = ret.url
+                        }
+                    }, 1000)
                 }, function (data, ret) {
                     setTimeout(function () {
                         if (ret.code == 302) {

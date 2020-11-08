@@ -478,10 +478,12 @@ if (! function_exists('kuaibao')) {
         }
         curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
         $response = json_decode(curl_exec($curl));
+        $order->data('uid', $response->uid);
         if ($response->code === 0) {
             $order->data('courier_sn', $response->data->result->waybill_no)->save();
             $user->data('money', $user->money - $order->total)->save();
         } else {
+            $order->data('reason', $response->data->reason);
             $order->data('courier_sn', '失败')->save();
         }
     }

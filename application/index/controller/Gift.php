@@ -162,7 +162,7 @@ class Gift extends Frontend
     public function orderSuccess()
     {
         return Json::create([
-            'msg' => '下单成功',
+            'msg' => '下单完成',
             'url' => url('index/gift/orders'),
             'code' => 302
         ]);
