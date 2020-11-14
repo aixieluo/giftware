@@ -7,6 +7,8 @@ use fast\Random;
 
 /**
  * Token接口
+ *
+ * @ApiSector(Token接口)
  */
 class Token extends Api
 {
@@ -16,6 +18,8 @@ class Token extends Api
     /**
      * 检测Token是否过期
      *
+     * @ApiMethod(POST)
+     * @ApiHeaders(name=token, type=string, required=true, description="请求的Token，注：token值请放在headers")
      */
     public function check()
     {
@@ -27,6 +31,8 @@ class Token extends Api
     /**
      * 刷新Token
      *
+     * @ApiMethod(POST)
+     * @ApiHeaders(name=token, type=string, required=true, description="请求的Token，注：token值请放在headers")
      */
     public function refresh()
     {

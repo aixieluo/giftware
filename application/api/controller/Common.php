@@ -13,6 +13,7 @@ use think\Hook;
 
 /**
  * 公共接口
+ * @ApiInternal
  */
 class Common extends Api
 {

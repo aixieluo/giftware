@@ -163,6 +163,7 @@ class Api
      */
     protected function success($msg = '', $data = null, $code = 1, $type = null, array $header = [])
     {
+        $msg = $msg ?: '返回成功';
         $this->result($msg, $data, $code, $type, $header);
     }
 
