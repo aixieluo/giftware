@@ -96,17 +96,20 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
                 sortName: 'id',
+                exportDataType: 'selected',
+                search:false,
+                showToggle: false,
+                showColumns: false,
+                showExport: false,
                 columns: [
                     [
                         {field: 'id', title: __('Id')},
                         {field: 'name', title: __('Name')},
                         {field: 'price', title: __('Price')},
                         {field: 'weight', title: __('Weight')},
-                        {field: 'express_codes', title: 'code',visible: false, operate: 'LIKE'},
                         {
                             field: 'image',
                             title: __('Image'),
-                            operate: false,
                             events: Table.api.events.image,
                             formatter: Table.api.formatter.image
                         },
