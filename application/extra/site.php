@@ -2,7 +2,7 @@
 
 return [
     'name' => '小代发',
-    'beian' => '',
+    'beian' => '浙ICP备2020032103号-1',
     'cdnurl' => '',
     'version' => '1.0.1',
     'timezone' => 'Asia/Shanghai',
