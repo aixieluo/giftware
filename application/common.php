@@ -419,7 +419,7 @@ if (!function_exists('xss_clean')) {
 }
 
 if (! function_exists('kuaibao')) {
-    function kuaibao(\app\admin\model\Order $order, \app\common\model\User $user)
+    function kuaibao(\app\common\model\User $user, \app\admin\model\Order $order)
     {
         $host = "https://kop.kuaidihelp.com/test";
         $headers = array();
@@ -483,8 +483,7 @@ if (! function_exists('kuaibao')) {
             $order->data('courier_sn', $response->data->result->waybill_no)->save();
             $user->data('money', $user->money - $order->total)->save();
         } else {
-            $order->data('reason', $response->data->reason);
-            $order->data('courier_sn', '失败')->save();
+            $order->data('reason', $response->data->reason)->save();
         }
     }
 }

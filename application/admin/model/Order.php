@@ -26,7 +26,8 @@ class Order extends Model
 
     // 追加属性
     protected $append = [
-        'plattype_text'
+        'plattype_text',
+        'real_sn',
     ];
 
     public function getPlattypeTextAttr()

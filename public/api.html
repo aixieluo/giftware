@@ -906,7 +906,90 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading"><strong>参数</strong></div>
                                         <div class="panel-body">
-                                                                                        无
+                                                                                        <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>名称</th>
+                                                        <th>类型</th>
+                                                        <th>必选</th>
+                                                        <th>描述</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                                                                        <tr>
+                                                        <td>sn</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>订单号，不可重复。</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>gift_id</td>
+                                                        <td>int</td>
+                                                        <td>是</td>
+                                                        <td>礼品编号，请在礼品列表接口获得具体编号</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>depot_id</td>
+                                                        <td>int</td>
+                                                        <td>是</td>
+                                                        <td>仓库编号，请在仓库列表接口获得具体编号</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>type</td>
+                                                        <td>int</td>
+                                                        <td>是</td>
+                                                        <td>单号类型 默认 1，1是菜鸟，2是拼多多（请注意识别仓库支持单号类型）</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>recipient</td>
+                                                        <td>int</td>
+                                                        <td>是</td>
+                                                        <td>收货人</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>receiver_phone</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>收货人号码</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>receiver_province</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>收货地址所在省</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>receiver_city</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>收货地址所在市</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>receiver_district</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>收货地址所在区</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>receiver_address</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>收货地址</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>sendname</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>发件人</td>
+                                                    </tr>
+                                                                                                        <tr>
+                                                        <td>sendphone</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>发件号码</td>
+                                                    </tr>
+                                                                                                    </tbody>
+                                            </table>
                                                                                     </div>
                                     </div>
                                     <div class="panel panel-default">
@@ -935,7 +1018,52 @@
                                                 <div class="panel-body">
                                                     <form enctype="application/x-www-form-urlencoded" role="form" action="/api/gift/order" method="POST" name="form6" id="form6">
                                                                                                                 <div class="form-group">
-                                                            无
+                                                            <label class="control-label" for="sn">sn</label>
+                                                            <input type="string" class="form-control input-sm" id="sn" required placeholder="订单号，不可重复。" name="sn">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="gift_id">gift_id</label>
+                                                            <input type="int" class="form-control input-sm" id="gift_id" required placeholder="礼品编号，请在礼品列表接口获得具体编号" name="gift_id">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="depot_id">depot_id</label>
+                                                            <input type="int" class="form-control input-sm" id="depot_id" required placeholder="仓库编号，请在仓库列表接口获得具体编号" name="depot_id">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="type">type</label>
+                                                            <input type="int" class="form-control input-sm" id="type" required placeholder="单号类型 默认 1，1是菜鸟，2是拼多多（请注意识别仓库支持单号类型）" name="type">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="recipient">recipient</label>
+                                                            <input type="int" class="form-control input-sm" id="recipient" required placeholder="收货人" name="recipient">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="receiver_phone">receiver_phone</label>
+                                                            <input type="string" class="form-control input-sm" id="receiver_phone" required placeholder="收货人号码" name="receiver_phone">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="receiver_province">receiver_province</label>
+                                                            <input type="string" class="form-control input-sm" id="receiver_province" required placeholder="收货地址所在省" name="receiver_province">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="receiver_city">receiver_city</label>
+                                                            <input type="string" class="form-control input-sm" id="receiver_city" required placeholder="收货地址所在市" name="receiver_city">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="receiver_district">receiver_district</label>
+                                                            <input type="string" class="form-control input-sm" id="receiver_district" required placeholder="收货地址所在区" name="receiver_district">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="receiver_address">receiver_address</label>
+                                                            <input type="string" class="form-control input-sm" id="receiver_address" required placeholder="收货地址" name="receiver_address">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="sendname">sendname</label>
+                                                            <input type="string" class="form-control input-sm" id="sendname" required placeholder="发件人" name="sendname">
+                                                        </div>
+                                                                                                                <div class="form-group">
+                                                            <label class="control-label" for="sendphone">sendphone</label>
+                                                            <input type="string" class="form-control input-sm" id="sendphone" required placeholder="发件号码" name="sendphone">
                                                         </div>
                                                                                                                 <div class="form-group">
                                                             <button type="submit" class="btn btn-success send" rel="6">提交</button>
@@ -1026,7 +1154,24 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading"><strong>参数</strong></div>
                                         <div class="panel-body">
-                                                                                        无
+                                                                                        <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>名称</th>
+                                                        <th>类型</th>
+                                                        <th>必选</th>
+                                                        <th>描述</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                                                                        <tr>
+                                                        <td>sn</td>
+                                                        <td>string</td>
+                                                        <td>是</td>
+                                                        <td>订单号</td>
+                                                    </tr>
+                                                                                                    </tbody>
+                                            </table>
                                                                                     </div>
                                     </div>
                                     <div class="panel panel-default">
@@ -1055,7 +1200,8 @@
                                                 <div class="panel-body">
                                                     <form enctype="application/x-www-form-urlencoded" role="form" action="/api/gift/courier" method="POST" name="form7" id="form7">
                                                                                                                 <div class="form-group">
-                                                            无
+                                                            <label class="control-label" for="sn">sn</label>
+                                                            <input type="string" class="form-control input-sm" id="sn" required placeholder="订单号" name="sn">
                                                         </div>
                                                                                                                 <div class="form-group">
                                                             <button type="submit" class="btn btn-success send" rel="7">提交</button>
@@ -1223,9 +1369,9 @@
 
             <div class="row mt0 footer">
                 <div class="col-md-6" align="left">
-                    Generated on 2020-11-14 14:16:40                </div>
+                    Generated on 2020-11-16 16:09:10                </div>
                 <div class="col-md-6" align="right">
-                    <a href="./" target="_blank">My Website</a>
+                    <a href="./" target="_blank">小代发</a>
                 </div>
             </div>
 
