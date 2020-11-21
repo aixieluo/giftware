@@ -59,7 +59,12 @@ class Gift extends Frontend
     {
         $id = $request->param('id');
         $depots = Depot::all();
-        $gifts = \app\admin\model\Gift::all();
+        if (! $id) {
+            $gifts = \app\admin\model\Gift::all();
+        } else {
+            $gifts = Depot::get($id)->gifts;
+        }
+        $this->assign('depot_id', $id);
         $this->assign('depots', $depots);
         $this->assign('gifts', $gifts);
         return $this->fetch();
@@ -120,11 +125,18 @@ class Gift extends Frontend
         $depot_id = $request->param('depot_id', $request->get('depot_id'));
         $gift_id = $request->param('gift_id', $request->get('gift_id'));
         $type = $request->param('type', $request->get('type'));
+        $gift = \app\admin\model\Gift::get($gift_id);
+        $depot = Depot::get($depot_id);
+        if (! $depot_id) {
+            $depot = $gift->depots()->find();
+            $depot_id = $depot->id;
+            $type = $depot->code;
+            $depots = Depot::all();
+            $this->assign('depots', $depots);
+        }
         $this->assign('depot_id', $depot_id);
         $this->assign('gift_id', $gift_id);
         $this->assign('type', $type);
-        $gift = \app\admin\model\Gift::get($gift_id);
-        $depot = Depot::get($depot_id);
         $this->assign('gift', $gift);
         $this->assign('depot', $depot);
         return [$gift, $depot, $type];
@@ -133,6 +145,16 @@ class Gift extends Frontend
     protected function validMoney($total)
     {
 
+    }
+
+    public function express_price(Request $request)
+    {
+        $depot_id = $request->post('depot_id');
+        $depot = Depot::get($depot_id);
+        return Json::create([
+            'ptid'          => $depot->code,
+            'express_price' => $depot->price
+        ]);
     }
 
     protected function lackMoney()

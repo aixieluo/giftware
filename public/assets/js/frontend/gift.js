@@ -48,17 +48,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
         buy() {
             $('#tsid').change(function () {
                 ptid = $('#tsid option:selected').attr('ptid')
-                if(ptid==3){
-                    var str='<label class="checkdiv"><input class="checkpt" name="type" type="radio" value="1" data-rule="checked">菜鸟单号（淘宝、天猫、1688）</label>';
-                    str=str+'<label class="checkdiv"><input class="checkpt" name="type" type="radio" value="2" data-rule="checked">拼多多电子（拼多多、京东可用）</label>'
-                    $("#platids").html(str);
-                }else if(ptid==2){
-                    var str='<label><input  name="type" type="radio" value="1" checked>菜鸟单号（淘宝、天猫、1688）</label>';
-                    $("#platids").html(str);
-                }else if (ptid==1){
-                    var str='<label><input  name="type" type="radio" value="2" checked>拼多多电子（拼多多、京东可用）</label>';
-                    $("#platids").html(str);
-                }
+                Controller.api.pintai(ptid)
             });
             $('#items').click(function () {
                 did = $('#tsid').val()
@@ -131,6 +121,27 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
             Controller.api.bindevent();
         },
         order() {
+            $(function () {
+                var price = $('.price').html();//商品单价
+                var total_price = $('.total-price');//总价 包含快递费
+                var goods_price = $('.goods-price');//商品总价 不包含快递费
+                $("input[name='depot_id'].depot").click(function(event){
+                    event.stopPropagation();
+                    var depot_id = $(this).val();
+                    $.ajax({
+                        data:{depot_id:depot_id},
+                        dataType:'json',
+                        type:'post',
+                        url:"/index/gift/express_price",
+                        success:function(res){
+                            $('.express_price').html(res.express_price);
+                            total_price.html((Number(price*1)+Number(res.express_price)).toFixed(2));
+                            goods_price.html((price*1).toFixed(2));
+                            Controller.api.pintai(res.ptid)
+                        }
+                    })
+                })
+            })
             //验证手动提交地址
             $(document).on("click", ".btn-dialog", function () {
                 var adds =$("#addstext").val();
@@ -176,6 +187,19 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
             Controller.api.bindevent()
         },
         api: {
+            pintai: function(ptid) {
+                if(ptid==3){
+                    var str='<label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" value="1" data-rule="checked"><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688）</label>';
+                    str=str+'<label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" value="2" data-rule="checked"><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>'
+                    $("#platids").html(str);
+                }else if(ptid==2){
+                    var str='<label class="col-sm-6 checkdiv"><input  name="type" type="radio" value="1" checked><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688）</label>';
+                    $("#platids").html(str);
+                }else if (ptid==1){
+                    var str='<label class="col-sm-6 checkdiv"><input  name="type" type="radio" value="2" checked><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>';
+                    $("#platids").html(str);
+                }
+            },
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"), function (data, ret) {
                     setTimeout(function () {

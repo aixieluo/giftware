@@ -119,9 +119,9 @@
 
                         <div class="collapse navbar-collapse" id="pix-navbar-collapse" style="padding-left:0;">
                             <ul class="nav navbar-nav media-middle pix-header-nav pix-adjust-height" id="pix-header-nav" style="margin-top: 3px;">
-                                <li class="active"><a href="#" class="pix-gray">全部</a></li>
+                                <li class="{if !$depot_id}active{/if}"><a href="/index/gift/index" class="pix-gray">全部</a></li>
                                 {volist name="depots" id="depot"}
-                                <li class=""><a href="/index/gift/index/id/{$depot.id}" class="pix-gray">{$depot.name}</a></li>
+                                <li class="{if $depot_id==$depot.id}active{/if}"><a href="/index/gift/index/id/{$depot.id}" class="pix-gray">{$depot.name}</a></li>
                                 {/volist}
                             </ul>
                         </div>
@@ -158,7 +158,7 @@
                                             <p>库存</p>
                                         </div>
                                         <div class="exchange p-1">
-                                            <a href="/index/gift/buy.html" class="btn blue-bg pix-white ">购买</a>
+                                            <a href="/index/gift/order/gift_id/{$gift.id}" class="btn blue-bg pix-white ">购买</a>
                                         </div>
                                     </div>
                                 </div>

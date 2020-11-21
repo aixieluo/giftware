@@ -1,11 +1,11 @@
 <div class="form-group">
     <label class="control-label col-xs-12 col-sm-2">使用平台:</label>
     <div class="col-xs-12 col-sm-8">
-        <div class="radio" id="platid">
-            {if $depot->cn && $type==1}
-            <label class="col-sm-7 checkdiv"><input class="checkpt" name="type" type="radio" {if $type==1}checked{/if} value="1"><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688 ）</label>
+        <div class="radio" id="platids">
+            {if $depot->cn && $type==1 || $type==3}
+            <label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" {if $type==1}checked{/if} value="1"><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688 ）</label>
             {/if}
-            {if $depot->pdd && $type==2}
+            {if $depot->pdd && $type==2 || $type==3}
             <label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" {if $type==2}checked{/if} value="2"><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>
             {/if}
         </div>
