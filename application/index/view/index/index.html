@@ -89,63 +89,23 @@
                     {/volist}
                 </div>
             </div>
-            <!--<div class="row user-dashboard">
+            <div class="row user-dashboard">
                 <div class="col-md-6">
                     <div class="panel panel-default index-discussionlist">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><a href="/index/lists/ids/1.html">帮助说明</a>
-                                <span class="text-muted pull-right"><a href="/index/lists/ids/1.html"> 更多</a></span></h3>
+                            <h3 class="panel-title"><a href="/index/news/index?type=2">帮助说明</a>
+                                <span class="text-muted pull-right"><a href="/index/news/index?type=2"> 更多</a></span></h3>
                         </div>
                         <div class="panel-body row">
                             <ul class="list-unstyled">
+                                {volist name="news2" id="news"}
                                 <li>
                                     <p class="clearfix">
-                                        <a href="/index/news/ids/212.html" class="pull-left"> 礼品岛下单了以后可以当天发货吗？</a>
-                                        <span class="text-muted pull-right">2020-11-21</span>
+                                        <a href="/index/news/show?id={$news.id}" class="pull-left"> {$news.content}</a>
+                                        <span class="text-muted pull-right">{$news.createtime}</span>
                                     </p>
                                 </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/211.html" class="pull-left"> 怎么样了解清楚礼品代发价格</a>
-                                        <span class="text-muted pull-right">2020-11-20</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/210.html" class="pull-left"> 礼品代发具体要怎么做比较好？</a>
-                                        <span class="text-muted pull-right">2020-11-19</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/209.html" class="pull-left"> 礼品岛会不会存在虚假的物流信息</a>
-                                        <span class="text-muted pull-right">2020-11-18</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/208.html" class="pull-left"> 哪些人群会需要了解礼品代发</a>
-                                        <span class="text-muted pull-right">2020-11-17</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/207.html" class="pull-left"> 礼品岛是否存在虚假发货的问题？</a>
-                                        <span class="text-muted pull-right">2020-11-16</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/206.html" class="pull-left"> 为什么越来越多人有礼品代发的需求</a>
-                                        <span class="text-muted pull-right">2020-11-14</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/204.html" class="pull-left"> 礼品代发是可以自由选择礼品吗？</a>
-                                        <span class="text-muted pull-right">2020-11-13</span>
-                                    </p>
-                                </li>
+                                {/volist}
                             </ul>
                         </div>
                     </div>
@@ -153,65 +113,25 @@
                 <div class="col-md-6">
                     <div class="panel panel-default index-discussionlist">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><a href="/index/lists/ids/0.html">网站公告</a>
-                                <span class="text-muted pull-right"><a href="/index/lists/ids/0.html"> 更多</a></span></h3>
+                            <h3 class="panel-title"><a href="/index/news/index?type=1">网站公告</a>
+                                <span class="text-muted pull-right"><a href="/index/news/index?type=1"> 更多</a></span></h3>
                         </div>
                         <div class="panel-body row">
                             <ul class="list-unstyled">
+                                {volist name="news1" id="news"}
                                 <li>
                                     <p class="clearfix">
-                                        <a href="/index/news/ids/205.html" class="pull-left"> 拼多多发货助手上线</a>
-                                        <span class="text-muted pull-right">2020-11-14</span>
+                                        <a href="/index/news/show?id={$news.id}" class="pull-left"> {$news.content}</a>
+                                        <span class="text-muted pull-right">{$news.createtime}</span>
                                     </p>
                                 </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/184.html" class="pull-left"> 圆通中转异常通知</a>
-                                        <span class="text-muted pull-right">2020-10-23</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/113.html" class="pull-left"> 礼品岛自动下单教程</a>
-                                        <span class="text-muted pull-right">2020-07-23</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/101.html" class="pull-left"> 申通义乌仓价格调整通知</a>
-                                        <span class="text-muted pull-right">2020-07-09</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/79.html" class="pull-left"> 北京地区停发通知</a>
-                                        <span class="text-muted pull-right">2020-06-15</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/36.html" class="pull-left"> 南京仓和义乌仓湖北省无法发货</a>
-                                        <span class="text-muted pull-right">2020-04-07</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/33.html" class="pull-left"> 关于湖北地区派件涨价通知</a>
-                                        <span class="text-muted pull-right">2020-03-24</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="clearfix">
-                                        <a href="/index/news/ids/32.html" class="pull-left"> 圆通广州仓上线通知</a>
-                                        <span class="text-muted pull-right">2020-03-11</span>
-                                    </p>
-                                </li>
+                                {/volist}
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row user-dashboard">
+            <!--<div class="row user-dashboard">
                 <div class="col-md-12">
                     <div class="panel panel-default index-discussionlist">
                         <div class="panel-heading">

@@ -13,10 +13,10 @@
 </style>
 <div id="content-container" class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             {include file="common/sidenav" /}
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h2 class="page-header">
@@ -76,8 +76,45 @@
                         </div>
 
                     </div>
+                    <h2 class="page-header">公告&amp;帮助中心</h2>
+                    <div class="row user-dashboard">
+                        <div class="col-md-12">
+                            <ul class="list-unstyled">
+                                {volist name="news" id="n"}
+                                <li class="col-xs-6"><p class="clearfix" style="border-bottom: 1px solid #eeeeee;"><a href="/index/news/show?id={$n.id}" class="pull-left" target="_blank">{$n.title}</a><span class="text-muted pull-right">{$n.createtime}</span></p></li>
+                                {/volist}
+                            </ul>
+                        </div>
+                    </div>
+                    <h2 class="page-header">价格表</h2>
+                    <div class="row user-dashboard">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>会员等级</th>
+                                    <th>所需积分</th>
+                                    <th>圆通</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="group" id="g"}
+                                <tr class="{if $g.id == $user.group_id}success{/if}">
+                                    <td>{$g.name}</td>
+                                    <td>{$g.point}</td>
+                                    <td>{$g.yt}</td>
+                                </tr>
+                                {/volist}
+<!--                                <tr>-->
+<!--                                    <td colspan="3" align="center">等级积分等于您的累计充值金额(如：累计充值500元，等级积分为500)</td>-->
+<!--                                </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

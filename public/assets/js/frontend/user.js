@@ -7,6 +7,14 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template'], function ($, und
         }
     };
     var Controller = {
+        sendinfo: function () {
+            //为表单绑定事件
+            Form.api.bindevent($("#sendinfo-form"), function (data, ret) {
+                setTimeout(function () {
+                    location.href = ret.url ? ret.url : "/";
+                }, 1000);
+            });
+        },
         login: function () {
             //本地验证未通过时提示
             $("#login-form").data("validator-options", validatoroptions);

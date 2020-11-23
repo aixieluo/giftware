@@ -2,6 +2,7 @@
 
 namespace app\admin\model;
 
+use app\common\library\Auth;
 use think\Model;
 
 
@@ -26,6 +27,13 @@ class Depot extends Model
         'support',
         'code',
     ];
+
+    public function getPriceAttr()
+    {
+        $user = Auth::instance()->getUser();
+        $group = $user->group;
+        return $group->yt;
+    }
 
     public function getGidsAttr()
     {

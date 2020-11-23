@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a href="/" aria-label="首页">首页</a></li>
+                <li class="am-active">{$title}</li>
+            </ol>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    {volist name="news" id="n"}
+                    <li><p class="clearfix">
+                        <a href="/index/news/show?id={$n.id}" class="pull-left">{$n.title}</a>
+                        <span class="text-muted pull-right">{$n.createtime}</span>
+                    </p></li>
+                    {/volist}
+                </ul>
+                {$news->render()}
+            </div>
+        </div>
+        <!--<div class="col-lg-3">
+            <div class="panel panel-default index-discussionlist">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="es-icon es-icon-whatshot pull-left"></i>热卖礼品</h3>
+                </div>
+                <div class="panel-body row">
+                    <div class="floor-recommend">
+                        <div class="floor-recommend-pic">
+                            <a href="/goods/detail/gid/30.html"><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/jiecebao.jpg" width="65px" height="65px" alt="洁厕宝"></a>
+                        </div>
+                        <div class="floor-recommend-desc">
+                            <div class="floor-recommend-name"><a href="/goods/detail/gid/30.html">洁厕宝</a></div>
+                            <div class="floor-recommend-weight">重量:0.05</div>
+                            <div class="floor-recommend-price">￥0.30</div>
+                        </div>
+                    </div>
+                    <div class="floor-recommend">
+                        <div class="floor-recommend-pic">
+                            <a href="/goods/detail/gid/34.html"><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/quwenniukou.jpg" width="65px" height="65px" alt="驱蚊扣一个"></a>
+                        </div>
+                        <div class="floor-recommend-desc">
+                            <div class="floor-recommend-name"><a href="/goods/detail/gid/34.html">驱蚊扣一个</a></div>
+                            <div class="floor-recommend-weight">重量:0.01</div>
+                            <div class="floor-recommend-price">￥0.40</div>
+                        </div>
+                    </div>
+                    <div class="floor-recommend">
+                        <div class="floor-recommend-pic">
+                            <a href="/goods/detail/gid/12.html"><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/haimian.jpg" width="65px" height="65px" alt="去污清洁海绵擦"></a>
+                        </div>
+                        <div class="floor-recommend-desc">
+                            <div class="floor-recommend-name"><a href="/goods/detail/gid/12.html">去污清洁海绵擦</a></div>
+                            <div class="floor-recommend-weight">重量:0.02</div>
+                            <div class="floor-recommend-price">￥0.39</div>
+                        </div>
+                    </div>
+                    <div class="floor-recommend">
+                        <div class="floor-recommend-pic">
+                            <a href="/goods/detail/gid/15.html"><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/xiangbao.jpg" width="65px" height="65px" alt="十二星座除味香包"></a>
+                        </div>
+                        <div class="floor-recommend-desc">
+                            <div class="floor-recommend-name"><a href="/goods/detail/gid/15.html">十二星座除味香包</a></div>
+                            <div class="floor-recommend-weight">重量:0.01</div>
+                            <div class="floor-recommend-price">￥0.10</div>
+                        </div>
+                    </div>
+                    <div class="floor-recommend">
+                        <div class="floor-recommend-pic">
+                            <a href="/goods/detail/gid/9.html"><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/84.jpg" width="65px" height="65px" alt="84洗衣皂"></a>
+                        </div>
+                        <div class="floor-recommend-desc">
+                            <div class="floor-recommend-name"><a href="/goods/detail/gid/9.html">84洗衣皂</a></div>
+                            <div class="floor-recommend-weight">重量:0.1</div>
+                            <div class="floor-recommend-price">￥0.75</div>
+                        </div>
+                    </div>
+                    <div class="floor-recommend">
+                        <div class="floor-recommend-pic">
+                            <a href="/goods/detail/gid/38.html"><img src="http://lpdao.fss-my.vhostgo.com/lipindaifa/kn951.jpeg" width="65px" height="65px" alt="KN95口罩一个"></a>
+                        </div>
+                        <div class="floor-recommend-desc">
+                            <div class="floor-recommend-name"><a href="/goods/detail/gid/38.html">KN95口罩一个</a></div>
+                            <div class="floor-recommend-weight">重量:0.01</div>
+                            <div class="floor-recommend-price">￥0.50</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>
+
+<style>
+    body {
+        font-size: 14px;
+        background-color: #fff;
+    }
+</style>

@@ -3,6 +3,7 @@
 namespace app\index\controller;
 
 use addons\wechat\model\WechatCaptcha;
+use app\admin\model\UserGroup as Group;
 use app\common\controller\Frontend;
 use app\common\library\Ems;
 use app\common\library\Sms;
@@ -11,6 +12,7 @@ use think\Config;
 use think\Cookie;
 use think\Hook;
 use think\Request;
+use think\response\Json;
 use think\Session;
 use think\Validate;
 
@@ -57,7 +59,11 @@ class User extends Frontend
      */
     public function index()
     {
+        $news = \app\admin\model\News::order('createtime', 'desc')->limit(8)->select();
+        $group = Group::all();
         $this->view->assign('title', __('User center'));
+        $this->assign('news', $news);
+        $this->assign('group', $group);
         return $this->view->fetch();
     }
 
@@ -318,7 +324,11 @@ class User extends Frontend
             $user->save($request->post());
         }
         $this->assign('user', $user);
-        return $this->fetch();
+        if ($request->isPost()) {
+            return Json::create(['msg' => '修改成功']);
+        } else {
+            return $this->fetch();
+        }
     }
 
     public function orders(Request $request)

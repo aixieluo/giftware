@@ -49,6 +49,11 @@ class User extends Model
             $changedata = $row->getChangedData();
             if (isset($changedata['money'])) {
                 $origin = $row->getOriginData();
+                $m = $changedata['money'] - $origin['money'];
+                if ($m > 0) {
+                    $row->score += $changedata['money'];
+                    $row->save();
+                }
                 MoneyLog::create(['user_id' => $row['id'], 'money' => $changedata['money'] - $origin['money'], 'before' => $origin['money'], 'after' => $changedata['money'], 'memo' => '管理员变更金额']);
             }
             if (isset($changedata['score'])) {

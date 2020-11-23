@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a href="/" aria-label="首页">首页</a></li>
+                <li><a href="/index/news/index?type={$type}">{$title}</a></li>
+                <li class="active">详情</li>
+            </ol>
+            <h4 class="page-header" align="center">{$news.title}<small>{$news.createtime}</small></h4>
+            <div class="message">
+                {$news.content}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #fff;
+        font-size: 14px;
+    }
+</style>
