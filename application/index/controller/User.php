@@ -324,7 +324,7 @@ class User extends Frontend
             $user->save($request->post());
         }
         $this->assign('user', $user);
-        if ($request->isPost()) {
+        if ($request->isAjax()) {
             return Json::create(['msg' => '修改成功']);
         } else {
             return $this->fetch();
