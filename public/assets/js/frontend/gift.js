@@ -47,7 +47,10 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
         },
         buy() {
             Controller.api.selectpt();
-            $('#tsid').change(Controller.api.selectpt());
+            $('#tsid').change(function () {
+                ptid = $('#tsid option:selected').attr('ptid')
+                Controller.api.pintai(ptid)
+            });
             $('#items').click(function () {
                 did = $('#tsid').val()
                 if (did <= 0) {
