@@ -46,10 +46,8 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
             Controller.api.bindevent();
         },
         buy() {
-            $('#tsid').change(function () {
-                ptid = $('#tsid option:selected').attr('ptid')
-                Controller.api.pintai(ptid)
-            });
+            Controller.api.selectpt();
+            $('#tsid').change(Controller.api.selectpt());
             $('#items').click(function () {
                 did = $('#tsid').val()
                 if (did <= 0) {
@@ -199,6 +197,10 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                     var str='<label class="col-sm-6 checkdiv"><input  name="type" type="radio" value="2" checked><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>';
                     $("#platids").html(str);
                 }
+            },
+            selectpt: function () {
+                ptid = $('#tsid option:selected').attr('ptid')
+                Controller.api.pintai(ptid)
             },
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"), function (data, ret) {
