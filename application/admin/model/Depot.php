@@ -31,7 +31,13 @@ class Depot extends Model
     public function getPriceAttr()
     {
         $user = Auth::instance()->getUser();
+        if (! $user) {
+            return $this->getData('price');
+        }
         $group = $user->group;
+        if (! $group) {
+            return $this->getData('price');
+        }
         return $group->yt;
     }
 
