@@ -2,6 +2,7 @@
 
 namespace app\index\controller;
 
+use addons\recharge\model\Order;
 use addons\wechat\model\WechatCaptcha;
 use app\admin\model\UserGroup as Group;
 use app\common\controller\Frontend;
@@ -10,6 +11,7 @@ use app\common\library\Sms;
 use app\common\model\Attachment;
 use think\Config;
 use think\Cookie;
+use think\Db;
 use think\Hook;
 use think\Request;
 use think\response\Json;
@@ -62,8 +64,10 @@ class User extends Frontend
         $news = \app\admin\model\News::order('createtime', 'desc')->limit(8)->select();
         $group = Group::all();
         $this->view->assign('title', __('User center'));
+        $score = Order::where('user_id', $this->auth->getUser()->id)->whereNotNull('paytime')->sum('payamount');
         $this->assign('news', $news);
         $this->assign('group', $group);
+        $this->assign('score', $score);
         return $this->view->fetch();
     }
 
