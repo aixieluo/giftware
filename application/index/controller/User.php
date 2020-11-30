@@ -62,7 +62,7 @@ class User extends Frontend
     public function index()
     {
         $news = \app\admin\model\News::order('createtime', 'desc')->limit(8)->select();
-        $group = Group::all();
+        $group = Group::where('status', 'normal')->select();
         $this->view->assign('title', __('User center'));
         $score = Order::where('user_id', $this->auth->getUser()->id)->whereNotNull('paytime')->sum('payamount');
         $this->assign('news', $news);
