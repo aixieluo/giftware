@@ -1,13 +1,16 @@
 <meta charset="utf-8">
-<title>{$title|default=''} – {$site.name}</title>
+<title>{$title|default=''}{if isset($$title)} – {/if}{$site.name}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="renderer" content="webkit">
 
-{if isset($keywords)}
-<meta name="keywords" content="{$keywords}">
+{if isset($site.meta_title)}
+<meta name="title" content="{$site.meta_title}">
 {/if}
-{if isset($description)}
-<meta name="description" content="{$description}">
+{if isset($site.meta_keyword)}
+<meta name="keywords" content="{$site.meta_keyword}">
+{/if}
+{if isset($site.meta_description)}
+<meta name="description" content="{$site.meta_description}">
 {/if}
 
 <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
