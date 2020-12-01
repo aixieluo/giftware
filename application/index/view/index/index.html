@@ -10,13 +10,9 @@
     <div class="carousel-inner">
         {volist name="ads" id="item" key="k"}
         <div class="item {if $k==1}active{/if}">
-            <div class="container">
-                <div class="row">
-                    <a target="{$item.target}" href="{$item.linkurl}">
-                        <img src="{$item.imageurl}" title="{$item.title}" style="max-width: 1920px;max-height: 520px">
-                    </a>
-                </div>
-            </div>
+            <a target="{$item.target}" href="{$item.linkurl}" style="width: 100%">
+                <img src="{$item.imageurl}" title="{$item.title}" style="width: {$w}px;height: {$h}px; max-width: 100%">
+            </a>
         </div>
         {/volist}
 <!--        <div class="item bgimg-01 active">-->

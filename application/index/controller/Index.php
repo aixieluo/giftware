@@ -22,6 +22,8 @@ class Index extends Frontend
         $news2 = News::where('type', 2)->order('createtime', 'desc')->limit(5)->select();
         $Adszone = new \addons\adszone\library\Adszone();
         $result = $Adszone->getAdsByMark('banner');
+        $this->assign('w', $result['width']);
+        $this->assign('h', $result['height']);
         $this->assign('ads', $result['data']);
         $this->assign('depots', $depots);
         $this->assign('gifts', $gifts);
