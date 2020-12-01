@@ -2,25 +2,27 @@
 <link rel="stylesheet" type="text/css" href="__CDN__/assets/css/diy.css"/>
 <div id="myCarousel" class="carousel slide page-index section fp-auto-height" data-ride="carousel" data-interval="5000">
     <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        {volist name="ads" id="item" key="k"}
+        <li data-target="#myCarousel" data-slide-to="{$k}" {if $k==1}class="active"{/if}></li>
 <!--        <li data-target="#myCarousel" data-slide-to="1"></li>-->
+        {/volist}
     </ol>
     <div class="carousel-inner">
-        <div class="item bgimg-01 active">
+        {volist name="ads" id="item" key="k"}
+        <div class="item {if $k==1}active{/if}">
             <div class="container">
-                <div class="pro-con pull-left">
-                    <h1 class="animated bounceInDown">
-                        礼品一站式采购
-                    </h1>
-                    <p class="animated slideInRight">
-                        一件礼品代发,价格实惠，送客户，送朋友的好选择<br>全国多个仓库发货，真实签收，运费低至2元
-                    </p>
-                    <a href="/index/gift/index.html" class="btn btn-primary animated fadeInUp">
-                        了解详情
+                <div class="row">
+                    <a target="{$item.target}" href="{$item.linkurl}">
+                        <img src="{$item.imageurl}" title="{$item.title}" style="max-width: 1920px;max-height: 520px">
                     </a>
                 </div>
             </div>
         </div>
+        {/volist}
+<!--        <div class="item bgimg-01 active">-->
+<!--            <div class="container">-->
+<!--            </div>-->
+<!--        </div>-->
         <!--<div class="item bgimg-02">
             <div class="container">
                 <div class="pro-con pull-right">

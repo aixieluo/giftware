@@ -20,6 +20,9 @@ class Index extends Frontend
         $gifts = \app\admin\model\Gift::all();
         $news1 = News::where('type', 1)->order('createtime', 'desc')->limit(5)->select();
         $news2 = News::where('type', 2)->order('createtime', 'desc')->limit(5)->select();
+        $Adszone = new \addons\adszone\library\Adszone();
+        $result = $Adszone->getAdsByMark('banner');
+        $this->assign('ads', $result['data']);
         $this->assign('depots', $depots);
         $this->assign('gifts', $gifts);
         $this->assign('news1', $news1);
