@@ -2,6 +2,7 @@
 
 namespace app\common\controller;
 
+use app\admin\model\Fmenu;
 use app\common\library\Auth;
 use think\Config;
 use think\Controller;
@@ -111,6 +112,8 @@ class Frontend extends Controller
 
         // 配置信息后
         Hook::listen("config_init", $config);
+        $menu = Fmenu::order('sort', 'desc')->select();
+        $this->assign('menu', $menu);
         // 加载当前控制器语言包
         $this->loadlang($controllername);
         $this->assign('site', $site);
