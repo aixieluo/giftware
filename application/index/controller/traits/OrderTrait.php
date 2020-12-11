@@ -14,7 +14,11 @@ trait OrderTrait
             $arr['sn'] = data_get($item, 'sn');
             $order = $this->storeOrder($this->auth->getUser(), $depot, $gift, $item['address'], $arr);
             $os[] = $order;
-            kuaibao($this->auth->getUser(), $order);
+            if ($depot->tianniu) {
+                $this->tn_create($this->auth->getUser(), $order);
+            } else {
+                kuaibao($this->auth->getUser(), $order);
+            }
         }
         return $os;
     }

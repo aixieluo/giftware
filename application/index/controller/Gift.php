@@ -6,6 +6,7 @@ use app\admin\model\Depot;
 use app\admin\model\Order;
 use app\common\controller\Frontend;
 use app\index\controller\traits\OrderTrait;
+use app\index\controller\traits\TianNiuTrait;
 use think\Config;
 use think\Cookie;
 use think\Hook;
@@ -23,7 +24,7 @@ class Gift extends Frontend
     protected $noNeedLogin = [];
     protected $noNeedRight = ['*'];
 
-    use OrderTrait;
+    use OrderTrait, TianNiuTrait;
 
     public function _initialize()
     {
@@ -62,7 +63,22 @@ class Gift extends Frontend
         if (! $id) {
             $gifts = \app\admin\model\Gift::all();
         } else {
-            $gifts = Depot::get($id)->gifts;
+            $d = Depot::get($id);
+            if ($d->tianniu) {
+                $gs = $this->tn_gifts();
+                if ($gs['code'] == -1) {
+                    $this->error($gs['msg']);
+                }
+                $gifts = $gs['data']['productlist'];
+                foreach ($gifts as $k => $v) {
+                    $gifts[$k]['image'] = $v['img'];
+                    $gifts[$k]['price'] = $v['money'];
+                    $gifts[$k]['nojump'] = false;
+                    session('gift' . $v['id'], $gifts[$k]);
+                }
+            } else {
+                $gifts = Depot::get($id)->gifts;
+            }
         }
         $this->assign('depot_id', $id);
         $this->assign('depots', $depots);
@@ -101,7 +117,7 @@ class Gift extends Frontend
     {
         $d = Depot::get($request->param('depot_id'));
         $this->assign('depot_id', $request->param('depot_id'));
-        $this->assign('depots', Depot::all());
+        $this->assign('depots', Depot::where('tianniu', 0)->select());
         $this->assign('gifts', $d ? $d->gifts : []);
         return $this->fetch();
     }
@@ -124,21 +140,27 @@ class Gift extends Frontend
     {
         $depot_id = $request->param('depot_id', $request->get('depot_id'));
         $gift_id = $request->param('gift_id', $request->get('gift_id'));
+        $tianniu = $request->param('tianniu', $request->get('tianniu', 0));
         $type = $request->param('type', $request->get('type'));
-        $gift = \app\admin\model\Gift::get($gift_id);
         $depot = Depot::get($depot_id);
+        if ($depot && $depot->tianniu) {
+            $gift = new \app\admin\model\Gift(session('gift'.$gift_id));
+        } else {
+            $gift = \app\admin\model\Gift::get($gift_id);
+        }
         if (! $depot_id) {
             $depot = $gift->depots()->find();
             $depot_id = $depot->id;
-            $type = $depot->code;
-            $depots = Depot::all();
+            $depots = Depot::where('tianniu', 0)->select();
             $this->assign('depots', $depots);
         }
+        $type = $depot->code;
         $this->assign('depot_id', $depot_id);
         $this->assign('gift_id', $gift_id);
         $this->assign('type', $type);
         $this->assign('gift', $gift);
         $this->assign('depot', $depot);
+        $this->assign('tianniu', $tianniu);
         return [$gift, $depot, $type];
     }
 
@@ -182,7 +204,7 @@ class Gift extends Frontend
             return $this->fetch();
         }
         $addresses = $this->addresses($request->post('addstext'));
-        if (count($addresses) * $gift->price > $this->auth->getUser()->money) {
+        if (count($addresses) * ($gift->price + $depot->price) > $this->auth->getUser()->money) {
             return $this->lackMoney();
         }
         $this->generateOrder($depot, $gift, $addresses, $request->post());

@@ -140,8 +140,8 @@
                     {volist name="gifts" id="gift"}
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         <div class="exchange-item">
-                            <div class="img-box"><a href="/index/gift/show/id/{$gift.id}"><img src="{$gift.image}"></a></div>
-                            <h2><a href="/index/gift/show/id/{$gift.id}">{$gift.name}</a></h2>
+                            <div class="img-box"><a {if !isset($gift.nojump)}href="/index/gift/show/id/{$gift.id}"{/if}><img src="{$gift.image}"></a></div>
+                            <h2><a {if !isset($gift.nojump)}href="/index/gift/show/id/{$gift.id}"{/if}>{$gift.name}</a></h2>
                             <div class="meta-box">
                                 <div class="info-txt clearfix">
                                     <div class="col-xs-4">
@@ -158,7 +158,7 @@
                                             <p>库存</p>
                                         </div>
                                         <div class="exchange p-1">
-                                            <a href="/index/gift/order/gift_id/{$gift.id}" class="btn blue-bg pix-white ">购买</a>
+                                            <a href="/index/gift/order/gift_id/{$gift.id}/depot_id/{$depot_id}{if isset($gift.nojump)}/tianniu/1{/if}" class="btn blue-bg pix-white ">购买</a>
                                         </div>
                                     </div>
                                 </div>

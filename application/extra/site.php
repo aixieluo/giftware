@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'name' => '小代发',
-    'beian' => '浙ICP备2020032103号-1',
+    'name' => 'My Website',
+    'beian' => '粤ICP备15000000号-1',
     'cdnurl' => '',
     'version' => '1.0.1',
     'timezone' => 'Asia/Shanghai',
@@ -32,4 +32,7 @@ return [
     'mail_smtp_pass' => 'password',
     'mail_verify_type' => '2',
     'mail_from' => '10000@qq.com',
+    'meta_title' => 'title1',
+    'meta_description' => 'description',
+    'meta_keyword' => 'keyword',
 ];

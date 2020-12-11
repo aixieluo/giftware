@@ -6,7 +6,11 @@ use app\admin\model\Depot;
 use app\admin\model\Fmenu;
 use app\admin\model\News;
 use app\common\controller\Frontend;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use think\Request;
+use Zttp\Zttp;
+use Zttp\ZttpResponse;
 
 class Index extends Frontend
 {
@@ -32,5 +36,4 @@ class Index extends Frontend
         $this->assign('news2', $news2);
         return $this->fetch();
     }
-
 }

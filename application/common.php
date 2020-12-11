@@ -487,3 +487,64 @@ if (! function_exists('kuaibao')) {
         }
     }
 }
+
+if (! function_exists('tianniu_sign')) {
+    function tianniu_sign($data)
+    {
+        $nounce = str_rand().time().'000';
+        $timestamp = time();
+        $app_key = 'b9a24e9414';
+        $app_secret = '51f3129c3b2314625996f59bde568a1b';
+        $arr = array_merge(compact('app_key', 'nounce', 'timestamp'), $data);
+        ksort($arr);
+        $str = '';
+        foreach ($arr as $k => $v) {
+            if(is_array($v)){
+                $v=json_encode($v);
+            }
+
+            $str.= $k.$v;
+        }
+        //拼接appsecret
+        $restr=$str.$app_secret;
+        //生成sign
+        $sign = sha1($restr);
+        return array_merge(compact('sign', 'nounce', 'timestamp', 'app_key'), $data);
+    }
+}
+
+if (! function_exists('str_rand')) {
+    function str_rand($length = 32, $char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+        if(!is_int($length) || $length < 0) {
+            return false;
+        }
+
+        $string = '';
+        for($i = $length; $i > 0; $i--) {
+            $string .= $char[mt_rand(0, strlen($char) - 1)];
+        }
+
+        return $string;
+    }
+}
+
+if (! function_exists('curl_http')) {
+    function curl_http($url, $headers, $bodys)
+    {
+        $host = $url;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_FAILONERROR, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        if (1 == strpos("$".$host, "https://"))
+        {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        }
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
+        return $response = json_decode(curl_exec($curl));
+    }
+}
