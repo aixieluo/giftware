@@ -3,6 +3,7 @@
 namespace app\index\controller\traits;
 
 use app\admin\model\Order;
+use app\common\model\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
@@ -54,11 +55,18 @@ trait TianNiuTrait
             'send_mobile'      => $user->fhao ?? $user->mobile,
         ]);
         if ($res['code'] == -1) {
+            if ($res['msg'] == '余额不足，请充值') {
+                $res['msg'] = '天牛余额不足，请联系管理员';
+            }
             $this->error($res['msg']);
         }
         $order->save([
             'courier'    => $res['data'][$order->real_sn]['kd_company'],
             'courier_sn' => $res['data'][$order->real_sn]['package_sn'],
+        ]);
+        /** @var User $user */
+        $user->save([
+            'money' => $user->money - $order->total,
         ]);
     }
 }
