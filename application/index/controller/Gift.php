@@ -3,6 +3,7 @@
 namespace app\index\controller;
 
 use app\admin\model\Depot;
+use app\admin\model\Gift as GiftAlias;
 use app\admin\model\Order;
 use app\common\controller\Frontend;
 use app\index\controller\traits\OrderTrait;
@@ -13,7 +14,6 @@ use think\Hook;
 use think\Request;
 use think\Response;
 use think\response\Json;
-use function EasyWeChat\Kernel\data_get;
 
 /**
  * 礼品
@@ -21,7 +21,7 @@ use function EasyWeChat\Kernel\data_get;
 class Gift extends Frontend
 {
     protected $layout = 'default';
-    protected $noNeedLogin = [];
+    protected $noNeedLogin = ['tn_fresh'];
     protected $noNeedRight = ['*'];
 
     use OrderTrait, TianNiuTrait;
@@ -61,7 +61,7 @@ class Gift extends Frontend
         $id = $request->param('id');
         $depots = Depot::all();
         if (! $id) {
-            $gifts = \app\admin\model\Gift::all();
+            $gifts = GiftAlias::all();
         } else {
             $d = Depot::get($id);
             if ($d->tianniu) {
@@ -86,10 +86,44 @@ class Gift extends Frontend
         return $this->fetch();
     }
 
+    public function tn_fresh(Request $request)
+    {
+        $id = $request->get('depot_id');
+        $depot = Depot::get($id);
+        if (! $depot) {
+            $this->error('仓库不存在');
+        }
+        if (! $depot->tianniu) {
+            $this->error('仓库未开启支持天牛数据');
+        }
+        $gs = $this->tn_gifts();
+        if ($gs['code'] == -1) {
+            $this->error($gs['msg']);
+        }
+        $depot->gifts()->detach();
+        $gifts = $gs['data']['productlist'];
+        $gids = [];
+        foreach ($gifts as $k => $v) {
+            $data = [
+                'id'     => $v['id'],
+                'name'   => $v['name'],
+                'image'  => $v['img'],
+                'price'  => $v['money'],
+                'weight' => $v['weight'],
+            ];
+            if (! $g = GiftAlias::get($v['id'])) {
+                $g = GiftAlias::create($data);
+            }
+            $gids[] = $g->id;
+        }
+        $depot->gifts()->attach($gids);
+        $this->redirect('/');
+    }
+
     public function show(Request $request)
     {
         $id = $request->param('id');
-        $gift = \app\admin\model\Gift::get($id);
+        $gift = GiftAlias::get($id);
         $this->assign('gift', $gift);
         return $this->fetch();
     }
@@ -117,7 +151,7 @@ class Gift extends Frontend
     {
         $d = Depot::get($request->param('depot_id'));
         $this->assign('depot_id', $request->param('depot_id'));
-        $this->assign('depots', Depot::where('tianniu', 0)->select());
+        $this->assign('depots', Depot::all());
         $this->assign('gifts', $d ? $d->gifts : []);
         return $this->fetch();
     }
@@ -143,15 +177,11 @@ class Gift extends Frontend
         $tianniu = $request->param('tianniu', $request->get('tianniu', 0));
         $type = $request->param('type', $request->get('type'));
         $depot = Depot::get($depot_id);
-        if ($depot && $depot->tianniu) {
-            $gift = new \app\admin\model\Gift(session('gift'.$gift_id));
-        } else {
-            $gift = \app\admin\model\Gift::get($gift_id);
-        }
+        $gift = GiftAlias::get($gift_id);
         if (! $depot_id) {
             $depot = $gift->depots()->find();
             $depot_id = $depot->id;
-            $depots = Depot::where('tianniu', 0)->select();
+            $depots = Depot::all();
             $this->assign('depots', $depots);
         }
         $type = $depot->code;
