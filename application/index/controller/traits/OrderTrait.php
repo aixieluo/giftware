@@ -17,7 +17,7 @@ trait OrderTrait
             if ($depot->tianniu) {
                 $this->tn_create($this->auth->getUser(), $order);
             } else {
-                kuaibao($this->auth->getUser(), $order);
+                $this->kuaibao($this->auth->getUser(), $order);
             }
         }
         return $os;

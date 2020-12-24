@@ -6,6 +6,7 @@ use app\admin\model\Depot;
 use app\admin\model\Gift as GiftAlias;
 use app\admin\model\Order;
 use app\common\controller\Frontend;
+use app\index\controller\traits\KuaiBaoTrait;
 use app\index\controller\traits\OrderTrait;
 use app\index\controller\traits\TianNiuTrait;
 use think\Config;
@@ -24,7 +25,7 @@ class Gift extends Frontend
     protected $noNeedLogin = ['tn_fresh'];
     protected $noNeedRight = ['*'];
 
-    use OrderTrait, TianNiuTrait;
+    use OrderTrait, TianNiuTrait, KuaiBaoTrait;
 
     public function _initialize()
     {
@@ -184,10 +185,9 @@ class Gift extends Frontend
             $depots = Depot::all();
             $this->assign('depots', $depots);
         }
-        $type = $depot->code;
         $this->assign('depot_id', $depot_id);
         $this->assign('gift_id', $gift_id);
-        $this->assign('type', $type);
+        $this->assign('type', $depot->code);
         $this->assign('gift', $gift);
         $this->assign('depot', $depot);
         $this->assign('tianniu', $tianniu);
@@ -227,12 +227,27 @@ class Gift extends Frontend
         ]);
     }
 
+    protected function validOrder($request)
+    {
+        $msg = $this->validate($request->post(), [
+            'depot_id'         => 'require',
+            'type'             => 'require',
+        ], [
+            'depot_id' => '仓库选择错误',
+            'type' => '平台选择错误',
+        ]);
+        if ($msg !== true) {
+            $this->error($msg);
+        }
+    }
+
     public function order(Request $request)
     {
         list($gift, $depot) = $this->tabs($request);
         if (! $request->isPost()) {
             return $this->fetch();
         }
+        $this->validOrder($request);
         $addresses = $this->addresses($request->post('addstext'));
         if (count($addresses) * ($gift->price + $depot->price) > $this->auth->getUser()->money) {
             return $this->lackMoney();
@@ -247,6 +262,7 @@ class Gift extends Frontend
         if (! $request->isAjax()) {
             return $this->fetch();
         }
+        $this->validOrder($request);
         $addresses = $this->getAddresses($request->post('excel'));
         if (count($addresses) * $gift->price > $this->auth->getUser()->money) {
             return $this->lackMoney();
