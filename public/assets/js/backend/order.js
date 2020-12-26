@@ -53,8 +53,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     type:'post',
                     url:"/admin/order/dadan",
                     success:function(res){
-                        console.log(res);
-                        // location.reload()
+                        Toastr.success('已开始打单，请稍后...')
                     }
                 })
             })
