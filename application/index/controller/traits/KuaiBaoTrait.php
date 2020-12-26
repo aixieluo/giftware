@@ -4,8 +4,9 @@ namespace app\index\controller\traits;
 
 trait KuaiBaoTrait
 {
-    protected function kuaibao(\app\common\model\User $user, \app\admin\model\Order $order)
+    protected function kuaibao(\app\admin\model\Order $order)
     {
+        $user = $order->user;
         $host = "https://kop.kuaidihelp.com/api";
         $headers = [];
         //根据API的要求，定义相对应的Content-Type
@@ -80,6 +81,7 @@ trait KuaiBaoTrait
         $info = curl_exec($curl);
         $response = json_decode($info);
         $order->data('uid', $response->uid);
+        $order->data('info', $info);
         if ($response->code === 0) {
             $order->data('courier_sn', $response->data->{$order->real_sn}->task_info->waybill_code)->save();
             $user->data('money', $user->money - $order->total)->save();

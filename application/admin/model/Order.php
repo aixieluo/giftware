@@ -24,6 +24,25 @@ class Order extends Model
     protected $updateTime = false;
     protected $deleteTime = false;
 
+    protected $field = [
+        'id',
+        'user_id',
+        'sn',
+        'tb_sn',
+        'pdd_sn',
+        'type',
+        'courier',
+        'total',
+        'item',
+        'recipient',
+        'receipt_number',
+        'receipt_address',
+        'plattype',
+        'depot_id',
+        'courier_sn',
+        'gift_id',
+    ];
+
     // 追加属性
     protected $append = [
         'plattype_text',

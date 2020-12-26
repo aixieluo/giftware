@@ -29,7 +29,8 @@
         "ext-pdo": "*",
         "topthink/think-migration": "1.*",
         "larapack/dd": "^1.1",
-        "shuchkin/simplexlsx": "^0.8.19"
+        "shuchkin/simplexlsx": "^0.8.19",
+        "topthink/think-queue": "^2"
     },
     "config": {
         "preferred-install": "dist"

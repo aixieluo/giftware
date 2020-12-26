@@ -11,6 +11,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     del_url: 'order/del',
                     multi_url: 'order/multi',
                     import_url: 'order/import',
+                    dadan_url: 'order/dadan',
                     table: 'order',
                 }
             });
@@ -45,6 +46,18 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     ]
                 ]
             });
+
+            $('#btn-dadan').click(() => {
+                $.ajax({
+                    dataType:'json',
+                    type:'post',
+                    url:"/admin/order/dadan",
+                    success:function(res){
+                        console.log(res);
+                        // location.reload()
+                    }
+                })
+            })
 
             // 为表格绑定事件
             Table.api.bindevent(table);
