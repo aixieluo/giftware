@@ -187,7 +187,8 @@ class Gift extends Frontend
         }
         $this->assign('depot_id', $depot_id);
         $this->assign('gift_id', $gift_id);
-        $this->assign('type', $depot->code);
+        $this->assign('type', $type);
+        $this->assign('code', $depot->code);
         $this->assign('gift', $gift);
         $this->assign('depot', $depot);
         $this->assign('tianniu', $tianniu);
