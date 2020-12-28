@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" id="navtab">
-    <li class="{:check_nav_active('gift/order')}"><a href="/index/gift/order/gift_id/{$gift_id}/depot_id/{$depot_id}/type/{$type}{if $tianniu}/tianniu/1{/if}.html">手工上传</a></li>
-    <li class="{:check_nav_active('gift/upload')}"><a href="/index/gift/upload/gift_id/{$gift_id}/depot_id/{$depot_id}/type/{$type}{if $tianniu}/tianniu/1{/if}.html">批量上传</a></li>
+    <li class="{:check_nav_active('gift/order')}"><a href="/index/gift/order/gift_id/{$gift_id}/depot_id/{$depot_id}{if $type}/type/{$type}{/if}{if $tianniu}/tianniu/1{/if}.html">手工上传</a></li>
+    <li class="{:check_nav_active('gift/upload')}"><a href="/index/gift/upload/gift_id/{$gift_id}/depot_id/{$depot_id}{if $type}/type/{$type}{/if}{if $tianniu}/tianniu/1{/if}.html">批量上传</a></li>
 <!--    <li class="{:check_nav_active('gift/typeauto')}"><a href="/index/gift/typeauto/gift_id/{$gift_id}/depot_id/{$depot_id}/type/{$type}.html">自动下单</a></li>-->
 <!--    <li class="{:check_nav_active('gift/typeorder')}"><a href="/index/gift/typeorder/gift_id/{$gift_id}/depot_id/{$depot_id}/type/{$type}.html">订单号下单</a></li>-->
 </ul>
