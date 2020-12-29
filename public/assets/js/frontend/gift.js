@@ -191,13 +191,13 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
             pintai: function(ptid) {
                 if(ptid==3){
                     var str='<label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" value="1" data-rule="checked"><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688）</label>';
-                    str=str+'<label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" value="2" data-rule="checked"><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>'
+                    str=str+'<label class="col-sm-6 checkdiv"><input class="checkpt" name="type" type="radio" value="2" data-rule="checked"><img src="/assets/img/pdd.gif"> 拼多多单号（拼多多、京东可用）</label>'
                     $("#platids").html(str);
                 }else if(ptid==2){
                     var str='<label class="col-sm-6 checkdiv"><input  name="type" type="radio" value="1" checked><img src="/assets/img/tb.png"> 菜鸟单号（淘宝、天猫、1688）</label>';
                     $("#platids").html(str);
                 }else if (ptid==1){
-                    var str='<label class="col-sm-6 checkdiv"><input  name="type" type="radio" value="2" checked><img src="/assets/img/pdd.gif"> 拼多多电子（拼多多、京东可用）</label>';
+                    var str='<label class="col-sm-6 checkdiv"><input  name="type" type="radio" value="2" checked><img src="/assets/img/pdd.gif"> 拼多多单号（拼多多、京东可用）</label>';
                     $("#platids").html(str);
                 }
             },

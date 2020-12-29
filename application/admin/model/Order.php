@@ -51,7 +51,7 @@ class Order extends Model
 
     public function getPlattypeTextAttr()
     {
-        return $this->plattype == 1 ? '菜鸟单号' : ' 拼多多电子';
+        return $this->plattype == 1 ? '菜鸟单号' : ' 拼多多单号';
     }
 
     public function getRealSnAttr()
