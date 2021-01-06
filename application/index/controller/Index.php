@@ -34,6 +34,7 @@ class Index extends Frontend
         $this->assign('gifts', $gifts);
         $this->assign('news1', $news1);
         $this->assign('news2', $news2);
+        $this->assign('title', '最专业的礼品代发平台');
         return $this->fetch();
     }
 }
