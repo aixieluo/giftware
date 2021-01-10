@@ -43,6 +43,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
             });
 
             // 为表格绑定事件
+            Table.api.bindevent(table);
             Controller.api.bindevent();
         },
         buy() {
