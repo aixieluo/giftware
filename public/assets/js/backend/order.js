@@ -51,7 +51,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 $.ajax({
                     dataType:'json',
                     type:'post',
-                    url:"/admin/order/dadan",
+                    url:"/order/dadan",
                     success:function(res){
                         Toastr.success('已开始打单，请稍后...')
                     }
