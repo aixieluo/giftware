@@ -105,6 +105,7 @@ class Order
 
             // 更新会员余额
             User::money($order->amount, $order->user_id, '充值');
+            User::score($order->amount, $order->user_id, '充值');
 
             $result = \think\Hook::listen('recharge_order_settled', $order);
         }
