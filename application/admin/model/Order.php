@@ -41,6 +41,8 @@ class Order extends Model
         'depot_id',
         'courier_sn',
         'gift_id',
+        'reason',
+        'info',
     ];
 
     // 追加属性

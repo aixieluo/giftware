@@ -2,6 +2,8 @@
 
 namespace app\index\controller\traits;
 
+use function fast\array_get;
+
 trait KuaiBaoTrait
 {
     protected function kuaibao(\app\admin\model\Order $order)
@@ -86,7 +88,7 @@ trait KuaiBaoTrait
             $order->data('courier_sn', $response->data->{$order->real_sn}->task_info->waybill_code)->save();
             $user->data('money', $user->money - $order->total)->save();
         } else {
-            $order->data('reason', $response->data->reason)->save();
+            $order->data('reason', array_get(json_decode($info, true), 'data.reason'))->save();
         }
     }
 }
