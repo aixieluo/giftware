@@ -88,7 +88,15 @@ trait KuaiBaoTrait
             $order->data('courier_sn', $response->data->{$order->real_sn}->task_info->waybill_code)->save();
             $user->data('money', $user->money - $order->total)->save();
         } else {
-            $order->data('reason', \fast\Arr::get(json_decode($info, true), 'data.reason'))->save();
+            $order->data('reason', $this->arr_get($this->arr_get(json_decode($info, true), 'data'), 'reason'))->save();
         }
+    }
+
+    public function arr_get($arr, $key)
+    {
+        if (is_array($arr) && isset($arr[$key])) {
+            return $arr[$key];
+        }
+        return false;
     }
 }
