@@ -2,8 +2,6 @@
 
 namespace app\index\controller\traits;
 
-use function fast\array_get;
-
 trait KuaiBaoTrait
 {
     protected function kuaibao(\app\admin\model\Order $order)
@@ -88,15 +86,30 @@ trait KuaiBaoTrait
             $order->data('courier_sn', $response->data->{$order->real_sn}->task_info->waybill_code)->save();
             $user->data('money', $user->money - $order->total)->save();
         } else {
-            $order->data('reason', $this->arr_get($this->arr_get(json_decode($info, true), 'data'), 'reason'))->save();
+            $info = json_decode($info, true);
+            $order->data('reason', $this->arr_get($info, 'data.reason', $this->arr_get($info, "data.{$order->real_sn}.message")));
+            $order->save();
         }
     }
 
-    public function arr_get($arr, $key)
+    public function arr_get($array, $key, $default = null)
     {
-        if (is_array($arr) && isset($arr[$key])) {
-            return $arr[$key];
+        if (! is_array($array)) {
+            return $default;
         }
-        return false;
+        if (is_null($key)) {
+            return $array;
+        }
+        if (array_key_exists($key, $array)) {
+            return $array[$key];
+        }
+        foreach (explode('.', $key) as $segment) {
+            if (is_array($array) && array_key_exists($segment, $array)) {
+                $array = $array[$segment];
+            } else {
+                return $default;
+            }
+        }
+        return $array;
     }
 }
