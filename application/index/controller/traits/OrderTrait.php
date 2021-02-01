@@ -1,14 +1,36 @@
 <?php
 
 namespace app\index\controller\traits;
+use app\admin\job\KuaiBaoJob;
 use app\admin\model\Depot;
 use app\admin\model\Order;
+use think\Queue;
 use function EasyWeChat\Kernel\data_get;
 
 trait OrderTrait
 {
+    protected function validAddress($list)
+    {
+        foreach ($list as $item) {
+            $address = $item['address'];
+            $p = $this->arr_get(explode(',', $address), 2);
+            $p = $this->arr_get(explode(' ', trim($p)), 0);
+            $except = [
+                '海南',
+                '新疆',
+                '西藏',
+            ];
+            foreach ($except as $addr) {
+                if (mb_strpos($p, $addr) !== false) {
+                    $this->error('很抱歉！由于海南，新疆，西藏运费偏高，暂不能发货，请删掉此地址即可发货！');
+                }
+            }
+        }
+    }
+
     protected function generateOrder($depot, $gift, $list, $arr)
     {
+        $this->validAddress($list);
         $os = [];
         foreach ($list as $item) {
             $arr['sn'] = data_get($item, 'sn');
@@ -18,7 +40,8 @@ trait OrderTrait
             if ($depot->tianniu) {
                 $this->tn_create($this->auth->getUser(), $order);
             } else {
-                $this->kuaibao($order);
+                Queue::push(KuaiBaoJob::class, $order);
+//                $this->kuaibao($order);
             }
         }
         return $os;
