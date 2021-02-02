@@ -81,6 +81,7 @@ class Gift extends Frontend
                 $gifts = Depot::get($id)->gifts;
             }
         }
+        $this->assign('pname', '礼品商城');
         $this->assign('depot_id', $id);
         $this->assign('depots', $depots);
         $this->assign('gifts', $gifts);
@@ -125,6 +126,7 @@ class Gift extends Frontend
     {
         $id = $request->param('id');
         $gift = GiftAlias::get($id);
+        $this->assign('pname', $gift->name);
         $this->assign('gift', $gift);
         return $this->fetch();
     }

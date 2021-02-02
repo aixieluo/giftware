@@ -26,6 +26,7 @@ class News extends Frontend
     {
         $news = NewsModel::get($request->get('id'));
         $type = $news->type;
+        $this->assign('pname', $news->title);
         $this->assign('news', $news);
         $this->assign('title', $type == 1 ? '网站公告' : '帮助说明');
         $this->assign('type', $type);
