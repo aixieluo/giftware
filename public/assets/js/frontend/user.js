@@ -80,6 +80,29 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template'], function ($, und
                 }, 1000);
             });
         },
+        index: function () {
+            var gong =  $("#cgong").text();
+            console.log(gong);
+            if(gong == 0){return;}else{
+                console.log(123);
+                var id = "gonggaotpl";
+                var content = Template(id, {});
+                Layer.open({
+                    type: 1,
+                    title: "通知公告",
+                    area: ["400px", "250px"],
+                    content: content,
+                    success: function (layero) {
+                        var form = $("form", layero);
+                        Form.api.bindevent(form, function (data) {
+                            location.reload();
+                            Layer.closeAll();
+                        });
+                    }
+                });
+            }
+
+        },
         profile: function () {
             // 给上传按钮添加上传成功事件
             $("#faupload-avatar").data("upload-success", function (data) {

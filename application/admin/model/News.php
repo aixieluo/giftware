@@ -23,9 +23,13 @@ class News extends Model
     protected $updateTime = false;
     protected $deleteTime = false;
 
+    protected $field = [
+        'notice',
+    ];
+
     // 追加属性
     protected $append = [
-
+        'type_text',
     ];
 
     public function getCreatetimeAttr()
@@ -34,7 +38,17 @@ class News extends Model
     }
 
 
-
+    public function getTypeTextAttr()
+    {
+        switch ($this->getData('type')) {
+            case 1:
+                return '新闻';
+            case 2:
+                return '帮助';
+            default:
+                return '错误类型，不会显示，请修改';
+        }
+    }
 
 
 

@@ -65,6 +65,8 @@ class User extends Frontend
         $group = Group::where('status', 'normal')->select();
         $this->view->assign('title', __('User center'));
         $score = Order::where('user_id', $this->auth->getUser()->id)->whereNotNull('paytime')->sum('payamount');
+        $notice = \app\admin\model\News::where('notice', 1)->find();
+        $this->assign('notice', $notice);
         $this->assign('news', $news);
         $this->assign('group', $group);
         $this->assign('score', $score);

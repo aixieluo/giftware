@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="col-xs-4 col-md-2">{:__('Score')}</div>
                                         <div class="col-xs-8 col-md-4">
-<!--                                            <a href="javascript:;" class="viewscore">{$score}</a>-->
+                                            <!--                                            <a href="javascript:;" class="viewscore">{$score}</a>-->
                                             <a href="javascript:;" class="viewscore">{$user.score}</a>
                                         </div>
                                     </div>
@@ -82,7 +82,10 @@
                         <div class="col-md-12">
                             <ul class="list-unstyled">
                                 {volist name="news" id="n"}
-                                <li class="col-xs-6"><p class="clearfix" style="border-bottom: 1px solid #eeeeee;"><a href="/index/news/show?id={$n.id}" class="pull-left" target="_blank">{$n.title}</a><span class="text-muted pull-right">{$n.createtime}</span></p></li>
+                                <li class="col-xs-6"><p class="clearfix" style="border-bottom: 1px solid #eeeeee;"><a
+                                        href="/index/news/show?id={$n.id}" class="pull-left"
+                                        target="_blank">{$n.title}</a><span class="text-muted pull-right">{$n.createtime}</span>
+                                </p></li>
                                 {/volist}
                             </ul>
                         </div>
@@ -106,9 +109,9 @@
                                     <td>{$g.yt}</td>
                                 </tr>
                                 {/volist}
-<!--                                <tr>-->
-<!--                                    <td colspan="3" align="center">等级积分等于您的累计充值金额(如：累计充值500元，等级积分为500)</td>-->
-<!--                                </tr>-->
+                                <!--                                <tr>-->
+                                <!--                                    <td colspan="3" align="center">等级积分等于您的累计充值金额(如：累计充值500元，等级积分为500)</td>-->
+                                <!--                                </tr>-->
                                 </tbody>
                             </table>
                         </div>
@@ -118,4 +121,28 @@
         </div>
     </div>
 </div>
-
+<div id="cgong" class="hidden">{if $notice}{$notice.title}{/if}</div>
+{if $notice}
+<script type="text/html" id="gonggaotpl">
+    <div class="form-body">
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-12"><p style="text-align:center;">
+	<span style="color:#337FE5;font-size:16px;"><span style="color:#337FE5;"><span
+            style="color:#337FE5;font-size:16px;"><span style="font-size:16px;color:#337FE5;"><br/>
+</span></span></span></span>
+            </p>
+                <p style="text-align:center;">
+	<span style="color:#337FE5;font-size:16px;"><span style="color:#337FE5;"><span
+            style="color:#337FE5;font-size:16px;"><span style="font-size:16px;color:#337FE5;"><br/>
+</span></span></span></span>
+                </p>
+                <p style="text-align:center;">
+                    <span style="color:#337FE5;font-size:16px;"><span style="color:#337FE5;"><span
+                            style="color:#337FE5;font-size:16px;"><span style="font-size:16px;color:#337FE5;"><a
+                            href="/index/news/show?id={$notice.id}" target="_blank"><strong><span
+                            style="font-size:16px;color:#337FE5;">【{$notice.title}】</span></strong></a></span></span></span></span>
+                </p></div>
+        </div>
+    </div>
+</script>
+{/if}

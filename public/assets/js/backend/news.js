@@ -27,8 +27,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'title', title: __('Title'), operate: 'LIKE'},
-                        {field: 'type', title: __('Type')},
+                        {field: 'type_text', title: __('Type')},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false},
+                        {field: 'notice', title: '弹出公告', table: table, formatter: function(v) {
+                                return v ? '是':'否'
+                            }},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]
