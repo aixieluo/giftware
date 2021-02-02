@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], function ($, undefined, Frontend, Form, Template, Table) {
+define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboard'], function ($, undefined, Frontend, Form, Template, Table, ClipboardJS) {
     var validatoroptions = {
         invalid: function (form, errors) {
             $.each(errors, function (i, j) {
@@ -28,7 +28,12 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                         {checkbox: true},
                         // {field: 'id', title: __('ID')},
                         // {field: 'user_id', title: __('User_id')},
-                        {field: 'courier_sn', title: __('Courier_sn'), operate: 'LIKE'},
+                        {field: 'courier_sn', title: __('Courier_sn'), operate: 'LIKE',formatter:function(value,row,index){
+                                if(!value){
+                                    return value
+                                }else{
+                                    return "<a href='https://www.baidu.com/s?ie=UTF-8&wd="+value+"' target='_blank' data-toggle='tooltip' data-original-title='点击查询物流记录'>"+value+"</a>  <a href='javascript:;'  data-clipboard-text='"+value+"' class='btn btn-xs btn-fuzhi btn-success' data-toggle='tooltip' title='复制："+value+"' >复制</a>";
+                                }}},
                         {field: 'courier', title: __('Courier'), operate: 'LIKE'},
                         // {field: 'tb_sn', title: __('Tb_sn'), operate: 'LIKE'},
                         // {field: 'pdd_sn', title: __('Pdd_sn'), operate: 'LIKE'},
@@ -41,6 +46,15 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                     ]
                 ]
             });
+            var clipboard = new ClipboardJS('.btn-fuzhi');
+            clipboard.on('success', function(e) {
+                Toastr.success('复制成功');
+            });
+
+            clipboard.on('error', function(e) {
+                Toastr.error('复制失败');
+            });
+
 
             // 为表格绑定事件
             Table.api.bindevent(table);
