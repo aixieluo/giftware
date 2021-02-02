@@ -32,7 +32,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table'], functio
                         {field: 'courier', title: __('Courier'), operate: 'LIKE'},
                         // {field: 'tb_sn', title: __('Tb_sn'), operate: 'LIKE'},
                         // {field: 'pdd_sn', title: __('Pdd_sn'), operate: 'LIKE'},
-                        {field: 'plattype_text', title: __('Type'), operate: 'LIKE'},
+                        {field: 'plattype_text', title: __('Type'), searchable:false},
                         {field: 'total', title: __('Total'), operate: 'BETWEEN'},
                         {field: 'item', title: __('Item'), operate: 'LIKE'},
                         {field: 'recipient', title: __('Recipient'), operate: 'LIKE'},

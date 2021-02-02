@@ -133,12 +133,24 @@ class Gift extends Frontend
     {
         $user = $this->auth->getUser();
         if ($request->isAjax()) {
-            $orders =
-                Order::where('user_id', $this->auth->getUser()['id'])
-                    ->order('id', 'desc')
-                    ->paginate($request->get('limit'), false, [
-                        'page' => $request->get('offset') / $request->get('limit') + 1,
-                    ]);
+            $filter = json_decode(htmlspecialchars_decode($request->get('filter')), true);
+            $ops = json_decode(htmlspecialchars_decode($request->get('op')), true);
+            $orders = Order::where('user_id', $this->auth->getUser()['id']);
+            foreach ($ops as $key => $op) {
+                switch ($op) {
+                    case 'LIKE':
+                        $orders = $orders->whereLike($key, "%{$filter[$key]}%");
+                        break;
+                    case 'BETWEEN':
+                        $orders = $orders->whereBetween($key, explode(',', $filter[$key]));
+                        break;
+                    default:
+                        $orders = $orders->where($key, $op, $filter[$key]);
+                }
+            }
+            $orders = $orders->order('id', 'desc')->paginate($request->get('limit'), false, [
+                    'page' => $request->get('offset') / $request->get('limit') + 1,
+                ]);
             $data['rows'] = $orders->getCollection();
             $data['total'] = $orders->total();
             return Response::create($data, 'json');
@@ -231,11 +243,11 @@ class Gift extends Frontend
     protected function validOrder($request)
     {
         $msg = $this->validate($request->post(), [
-            'depot_id'         => 'require',
-            'type'             => 'require',
+            'depot_id' => 'require',
+            'type'     => 'require',
         ], [
             'depot_id' => '仓库选择错误',
-            'type' => '平台选择错误',
+            'type'     => '平台选择错误',
         ]);
         if ($msg !== true) {
             $this->error($msg);

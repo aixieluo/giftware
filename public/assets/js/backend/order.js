@@ -36,7 +36,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'recipient', title: __('Recipient'), operate: 'LIKE'},
                         {field: 'receipt_number', title: __('Receipt_number'), operate: 'LIKE'},
                         {field: 'receipt_address', title: __('Receipt_address'), operate: 'LIKE'},
-                        {field: 'plattype_text', title: __('Type'), operate: 'LIKE'},
+                        {field: 'plattype_text', title: __('Type')},
                         {field: 'courier', title: __('Courier'), operate: 'LIKE'},
                         {field: 'courier_sn', title: '快递号'},
                         {field: 'uid', title: '快宝UID'},
@@ -60,6 +60,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             // 为表格绑定事件
             Table.api.bindevent(table);
+            Controller.api.bindevent()
         },
         add: function () {
             Controller.api.bindevent();
