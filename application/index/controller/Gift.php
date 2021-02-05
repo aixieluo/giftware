@@ -22,7 +22,7 @@ use think\response\Json;
 class Gift extends Frontend
 {
     protected $layout = 'default';
-    protected $noNeedLogin = ['tn_fresh', 'index'];
+    protected $noNeedLogin = ['tn_fresh', 'index', 'show'];
     protected $noNeedRight = ['*'];
 
     use OrderTrait, TianNiuTrait, KuaiBaoTrait;
