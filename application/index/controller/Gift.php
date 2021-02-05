@@ -133,6 +133,7 @@ class Gift extends Frontend
 
     public function orders(Request $request)
     {
+        $this->assign('title', '我的订单');
         $user = $this->auth->getUser();
         if ($request->isAjax()) {
             $filter = json_decode(htmlspecialchars_decode($request->get('filter')), true);
@@ -164,6 +165,7 @@ class Gift extends Frontend
 
     public function buy(Request $request)
     {
+        $this->assign('title', '购买礼品');
         $d = Depot::get($request->param('depot_id'));
         $this->assign('depot_id', $request->param('depot_id'));
         $this->assign('depots', Depot::all());

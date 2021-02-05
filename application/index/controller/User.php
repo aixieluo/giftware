@@ -65,8 +65,15 @@ class User extends Frontend
         $group = Group::where('status', 'normal')->select();
         $this->view->assign('title', __('User center'));
         $score = Order::where('user_id', $this->auth->getUser()->id)->whereNotNull('paytime')->sum('payamount');
+        $noticeKey = "user-{$this->auth->getUser()->id}-notice";
         $notice = \app\admin\model\News::where('notice', 1)->find();
+        if ($notice && Session::get($noticeKey) == $notice->id) {
+            $notice = null;
+        }
         $this->assign('notice', $notice);
+        if ($notice) {
+            Session::set($noticeKey, $notice->id);
+        }
         $this->assign('news', $news);
         $this->assign('group', $group);
         $this->assign('score', $score);
@@ -325,6 +332,7 @@ class User extends Frontend
 
     public function sendInfo(Request $request)
     {
+        $this->assign('title', '发件信息');
         $user = $this->auth->getUser();
         if ($request->isPost()) {
             $user->save($request->post());
