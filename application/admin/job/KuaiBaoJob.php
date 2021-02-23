@@ -13,7 +13,7 @@ class KuaiBaoJob{
         $order = new Order();
         $order->isUpdate(true);
         $order->data($data);
-        if ($order->courier_sn) {
+        if (isset($order->courier_sn) && $order->courier_sn) {
             return $job->delete();
         }
 
