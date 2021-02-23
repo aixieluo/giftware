@@ -7,6 +7,10 @@ trait KuaiBaoTrait
     protected function kuaibao(\app\admin\model\Order $order)
     {
         $user = $order->user;
+        if ($order->total > $user->money) {
+            $order->data('reason', '余额不足')->save();
+            return;
+        }
         $host = "https://kop.kuaidihelp.com/api";
         $headers = [];
         //根据API的要求，定义相对应的Content-Type
