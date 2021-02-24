@@ -48,7 +48,7 @@ class Gift extends Api
      * @ApiParams(name=depot_id, type=int, required=true, description="仓库编号，请在仓库列表接口获得具体编号")
      * @ApiParams(name=type, type=int, required=true, description="单号类型 默认 1，1是菜鸟，2是拼多多（请注意识别仓库支持单号类型）")
      * @ApiParams(name=recipient, type=int, required=true, description="收货人")
-     * @ApiParams(name=receiver_phone, type=string, required=true, description="收货人号码")
+     * @ApiParams(name=receipt_number, type=string, required=true, description="收货人号码")
      * @ApiParams(name=receiver_province, type=string, required=true, description="收货地址所在省")
      * @ApiParams(name=receiver_city, type=string, required=true, description="收货地址所在市")
      * @ApiParams(name=receiver_district, type=string, required=true, description="收货地址所在区")
