@@ -43,6 +43,21 @@ trait OrderTrait
         return $os;
     }
 
+    protected function generateOrder2($depot, $gift, $list, $arr)
+    {
+        $this->validAddress($list);
+        $os = [];
+        foreach ($list as $item) {
+            $arr['sn'] = data_get($item, 'sn');
+            $order = $this->storeOrder($this->auth->getUser(), $depot, $gift, $item['address'], $arr);
+            // 如要只生成订单不打单，注释下面4行代码
+//                Queue::push(KuaiBaoJob::class, $order);
+            $order = $this->kuaibao($order);
+            $os[] = $order;
+        }
+        return $os;
+    }
+
     protected function storeOrder(
         \app\common\model\User $user,
         Depot $depot,

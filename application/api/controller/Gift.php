@@ -92,8 +92,8 @@ class Gift extends Api
         if (! $depot) {
             $this->error('错误的仓库id或者不支持单号类型');
         }
-        if (Order::where('sn', $request->post('sn'))->find()) {
-            $this->error('订单号已存在');
+        if ($o = Order::where('sn', $request->post('sn'))->find()) {
+            $this->error('订单号已存在', $o);
         }
         $this->auth->getUser()->fren = $request->post('sendname');
         $this->auth->getUser()->fhao = $request->post('sendphone');
@@ -103,20 +103,19 @@ class Gift extends Api
         $receipt_city = $request->post('receipt_city');
         $receipt_district = $request->post('receipt_district');
         $receipt_address = $request->post('receipt_address');
-        $orders = $this->generateOrder($depot, $gift, [
+        $orders = $this->generateOrder2($depot, $gift, [
             [
                 'sn'      => $request->post('sn'),
                 'address' => "{$recipient},{$receipt_number},{$receipt_province} {$receipt_city} {$receipt_district} {$receipt_address}"
             ]
         ], $request->post());
-        $data = [];
-        foreach ($orders as $order) {
-            $d = $order->getData();
-            $data[] = array_intersect_key($d, array_flip([
-                'sn',
-            ]));
+        $order = reset($orders);
+
+        if ($order instanceof Order) {
+            $order->hidden(['depot', 'user']);
         }
-        $this->success('', $data);
+
+        $this->success('', $order);
     }
 
     /**

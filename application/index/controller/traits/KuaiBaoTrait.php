@@ -94,6 +94,7 @@ trait KuaiBaoTrait
             $order->data('reason', $this->arr_get($info, 'data.reason', $this->arr_get($info, "data.{$order->real_sn}.message")));
             $order->save();
         }
+        return $order;
     }
 
     public function arr_get($array, $key, $default = null)
