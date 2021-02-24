@@ -28,6 +28,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                         {checkbox: true},
                         // {field: 'id', title: __('ID')},
                         // {field: 'user_id', title: __('User_id')},
+                        {field: 'sn', title: '订单号', operate: 'LIKE'},
                         {field: 'courier_sn', title: __('Courier_sn'), operate: 'LIKE',formatter:function(value,row,index){
                                 if(!value){
                                     return value
@@ -35,7 +36,6 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                                     return "<a href='https://www.baidu.com/s?ie=UTF-8&wd="+value+"' target='_blank' data-toggle='tooltip' data-original-title='点击查询物流记录'>"+value+"</a>  <a href='javascript:;'  data-clipboard-text='"+value+"' class='btn btn-xs btn-fuzhi btn-success' data-toggle='tooltip' title='复制："+value+"' >复制</a>";
                                 }}},
                         {field: 'courier', title: __('Courier'), operate: 'LIKE'},
-                        // {field: 'tb_sn', title: __('Tb_sn'), operate: 'LIKE'},
                         // {field: 'pdd_sn', title: __('Pdd_sn'), operate: 'LIKE'},
                         {field: 'plattype_text', title: __('Type'), searchable:false},
                         {field: 'total', title: __('Total'), operate: 'BETWEEN'},
