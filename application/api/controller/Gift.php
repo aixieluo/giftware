@@ -58,7 +58,7 @@ class Gift extends Api
      */
     public function order(Request $request)
     {
-        $msg = $this->validate($request->get(), [
+        $msg = $this->validate($request->post(), [
             'sn'               => 'require',
             'gift_id'          => 'require',
             'depot_id'         => 'require',
@@ -75,32 +75,32 @@ class Gift extends Api
         if ($msg !== true) {
             $this->error($msg);
         }
-        $gift = \app\admin\model\Gift::find($request->get('gift_id', 0));
+        $gift = \app\admin\model\Gift::find($request->post('gift_id', 0));
         if (! $gift) {
             $this->error('错误的礼品id');
         }
-        $plattype = intval($request->get('type', 1)) === 1 ? 'cn' : 'pdd';
-        $depot = Depot::where($plattype, 1)->find($request->get('depot_id', 0));
+        $plattype = intval($request->post('type', 1)) === 1 ? 'cn' : 'pdd';
+        $depot = Depot::where($plattype, 1)->find($request->post('depot_id', 0));
         if (! $depot) {
             $this->error('错误的仓库id或者不支持单号类型');
         }
-        if (Order::where('sn', $request->get('sn'))->find()) {
+        if (Order::where('sn', $request->post('sn'))->find()) {
             $this->error('订单号已存在');
         }
-        $this->auth->getUser()->fren = $request->get('sendname');
-        $this->auth->getUser()->fhao = $request->get('sendphone');
-        $recipient = $request->get('recipient');
-        $receipt_number = $request->get('receipt_number');
-        $receipt_province = $request->get('receipt_province');
-        $receipt_city = $request->get('receipt_city');
-        $receipt_district = $request->get('receipt_district');
-        $receipt_address = $request->get('receipt_address');
+        $this->auth->getUser()->fren = $request->post('sendname');
+        $this->auth->getUser()->fhao = $request->post('sendphone');
+        $recipient = $request->post('recipient');
+        $receipt_number = $request->post('receipt_number');
+        $receipt_province = $request->post('receipt_province');
+        $receipt_city = $request->post('receipt_city');
+        $receipt_district = $request->post('receipt_district');
+        $receipt_address = $request->post('receipt_address');
         $orders = $this->generateOrder($depot, $gift, [
             [
-                'sn'      => $request->get('sn'),
+                'sn'      => $request->post('sn'),
                 'address' => "{$recipient},{$receipt_number},{$receipt_province} {$receipt_city} {$receipt_district} {$receipt_address}"
             ]
-        ], $request->get());
+        ], $request->post());
         $data = [];
         foreach ($orders as $order) {
             $d = $order->getData();
