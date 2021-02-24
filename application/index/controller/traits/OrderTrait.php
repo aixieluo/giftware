@@ -15,11 +15,7 @@ trait OrderTrait
             $address = $item['address'];
             $p = $this->arr_get(explode(',', $address), 2);
             $p = $this->arr_get(explode(' ', trim($p)), 0);
-            $except = [
-                '海南',
-                '新疆',
-                '西藏',
-            ];
+            $except = Order::EXCEPT;
             foreach ($except as $addr) {
                 if (mb_strpos($p, $addr) !== false) {
                     $this->error('很抱歉！由于海南，新疆，西藏运费偏高，暂不能发货，请删掉此地址即可发货！');

@@ -16,6 +16,7 @@ use think\Queue;
  */
 class Order extends Backend
 {
+
     use KuaiBaoTrait;
 
     /**

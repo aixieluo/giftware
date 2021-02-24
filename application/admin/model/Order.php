@@ -9,7 +9,11 @@ use function EasyWeChat\Kernel\data_get;
 class Order extends Model
 {
 
-
+    const EXCEPT = [
+        '海南',
+        '新疆',
+        '西藏',
+    ];
 
 
 

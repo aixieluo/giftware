@@ -37,7 +37,9 @@ class Gift extends Api
      */
     public function depots()
     {
-        $this->success('', \app\admin\model\Depot::all());
+        $depots = \app\admin\model\Depot::all();
+        $except = Order::EXCEPT;
+        $this->success('', compact('depots', 'except'));
     }
 
     /**
@@ -75,6 +77,11 @@ class Gift extends Api
         ]);
         if ($msg !== true) {
             $this->error($msg);
+        }
+        foreach (Order::EXCEPT as $addr) {
+            if (mb_strpos($request->post('receipt_province'), $addr) !== false) {
+                $this->error('很抱歉！由于海南，新疆，西藏运费偏高，暂不能发货！');
+            }
         }
         $gift = \app\admin\model\Gift::find($request->post('gift_id', 0));
         if (! $gift) {
