@@ -26,6 +26,7 @@ class Depot extends Model
         'gids',
         'support',
         'code',
+        'express',
     ];
 
     public function getPriceAttr()
@@ -75,5 +76,10 @@ class Depot extends Model
         } elseif ($this->pdd) {
             return 1;
         }
+    }
+
+    public function getExpressAttr()
+    {
+        return '圆通';
     }
 }
