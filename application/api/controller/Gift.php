@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\admin\model\Depot;
 use app\admin\model\Order;
 use app\common\controller\Api;
+use app\index\controller\traits\KuaiBaoTrait;
 use app\index\controller\traits\OrderTrait;
 use think\Request;
 
@@ -15,7 +16,7 @@ use think\Request;
  */
 class Gift extends Api
 {
-    use OrderTrait;
+    use OrderTrait, KuaiBaoTrait;
 
     protected $noNeedRight = ['*'];
 
