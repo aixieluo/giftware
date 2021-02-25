@@ -38,8 +38,7 @@ class Gift extends Api
     public function depots()
     {
         $depots = \app\admin\model\Depot::all();
-        $except = Order::EXCEPT;
-        $this->success('', compact('depots', 'except'));
+        $this->success('', $depots);
     }
 
     /**

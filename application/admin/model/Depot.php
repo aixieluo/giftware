@@ -27,6 +27,7 @@ class Depot extends Model
         'support',
         'code',
         'express',
+        'except_province'
     ];
 
     public function getPriceAttr()
@@ -81,5 +82,10 @@ class Depot extends Model
     public function getExpressAttr()
     {
         return '圆通';
+    }
+
+    public function getExceptProvinceAttr()
+    {
+        return Order::EXCEPT;
     }
 }
