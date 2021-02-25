@@ -43,6 +43,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                         {field: 'recipient', title: __('Recipient'), operate: 'LIKE'},
                         {field: 'receipt_number', title: __('Receipt_number'), operate: 'LIKE'},
                         {field: 'receipt_address', title: __('Receipt_address'), operate: 'LIKE'},
+                        {field: 'reason', title: '原因', searchable:false},
                     ]
                 ]
             });

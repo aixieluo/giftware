@@ -88,7 +88,8 @@ trait KuaiBaoTrait
         $order->data('info', $info);
         if ($response->code === 0) {
             $order->data('courier_sn', $response->data->{$order->real_sn}->task_info->waybill_code)->save();
-            $user->data('money', $user->money - $order->total)->save();
+            \app\common\model\User::money(-$order->total, $user->id, '下单消费');
+//            $user->data('money', $user->money - $order->total)->save();
         } else {
             $info = json_decode($info, true);
             $order->data('reason', $this->arr_get($info, 'data.reason', $this->arr_get($info, "data.{$order->real_sn}.message")));
