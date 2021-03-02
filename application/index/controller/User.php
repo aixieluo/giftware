@@ -99,7 +99,7 @@ class User extends Frontend
             $rule = [
                 'username'  => 'require|length:3,30',
                 'password'  => 'require|length:6,30',
-                'email'     => 'require|email',
+//                'email'     => 'require|email',
                 'mobile'    => 'regex:/^1\d{10}$/',
                 '__token__' => 'require|token',
             ];
@@ -115,7 +115,7 @@ class User extends Frontend
             $data = [
                 'username'  => $username,
                 'password'  => $password,
-                'email'     => $email,
+//                'email'     => $email,
                 'mobile'    => $mobile,
                 '__token__' => $token,
             ];
