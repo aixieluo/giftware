@@ -38,7 +38,7 @@ trait KuaiBaoTrait
             "ts"     => $ts,
             "data"   => json_encode([
                 'agent_id'    => $agent_id,
-                'template_id' => '666691',
+                'template_id' => '666696',
                 'print_data'  => [
                     [
                         'tid'        => $order->real_sn,
