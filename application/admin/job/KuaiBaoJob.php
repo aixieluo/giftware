@@ -10,9 +10,11 @@ class KuaiBaoJob{
     use KuaiBaoTrait;
 
     public function fire(Job $job, $data){
-        $order = new Order();
-        $order->isUpdate(true);
-        $order->data($data);
+        $id = isset($data['id']) ? $data['id'] : null;
+        $order = Order::find($id);
+        //        $order = new Order();
+//        $order->isUpdate(true);
+//        $order->data($data);
         if (isset($order->courier_sn) && $order->courier_sn) {
             return $job->delete();
         }
