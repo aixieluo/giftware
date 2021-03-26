@@ -22,7 +22,8 @@ class KuaiBaoJob{
         $this->kuaibao($order);
         //....这里执行具体的任务
 
-        if ($job->attempts() > 3) {
+        if ($job->attempts() > 10) {
+            return $job->delete();
             //通过这个方法可以检查这个任务已经重试了几次了
         }
 
