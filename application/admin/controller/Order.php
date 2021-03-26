@@ -46,7 +46,7 @@ class Order extends Backend
 
     public function dadan()
     {
-        $orders = OrderAlias::whereNull('courier_sn')->select();
+        $orders = OrderAlias::whereNull('courier_sn')->whereTime('create_time', 'today')->select();
         foreach ($orders as $order) {
             Queue::push(KuaiBaoJob::class, $order);
         }
