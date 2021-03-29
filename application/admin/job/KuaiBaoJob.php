@@ -4,27 +4,32 @@ namespace app\admin\job;
 
 use app\admin\model\Order;
 use app\index\controller\traits\KuaiBaoTrait;
+use think\Log;
 use think\queue\Job;
 
 class KuaiBaoJob{
     use KuaiBaoTrait;
 
     public function fire(Job $job, $data){
-        $id = isset($data['id']) ? $data['id'] : null;
-        $order = Order::find($id);
-        //        $order = new Order();
-//        $order->isUpdate(true);
-//        $order->data($data);
-        if (isset($order->courier_sn) && $order->courier_sn) {
-            return $job->delete();
-        }
+        try {
+            $id = isset($data['id']) ? $data['id'] : null;
+            $order = Order::find($id);
+            //        $order = new Order();
+            //        $order->isUpdate(true);
+            //        $order->data($data);
+            if (isset($order->courier_sn) && $order->courier_sn) {
+                return $job->delete();
+            }
 
-        $this->kuaibao($order);
-        //....这里执行具体的任务
+            $this->kuaibao($order);
+            //....这里执行具体的任务
 
-        if ($job->attempts() > 10) {
-            return $job->delete();
-            //通过这个方法可以检查这个任务已经重试了几次了
+            if ($job->attempts() > 10) {
+                return $job->delete();
+                //通过这个方法可以检查这个任务已经重试了几次了
+            }
+        } catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
         }
 
 
