@@ -168,6 +168,10 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                 var adddan=new Array();
                 addtextarr=addtext.split("\n");
                 for(i=0;i<addtextarr.length;i++){
+                    if (addtextarr[i].split(',').length != 4) {
+                        layer.alert("第"+(i+1)+"个地址【"+addtextarr[i]+"】缺少信息，请仔细检查是否用\"，\"分隔好订单编号，姓名，手机，地址！")
+                        return;
+                    }
                     if(addtextarr[i]!=''){
                         if(addtextarr[i].indexOf(",") == -1){
                             alert("第"+(i+1)+"个收货地址【"+addtextarr[i]+"】收件人号码地址用逗号分开(姓名,号码,地址)");
