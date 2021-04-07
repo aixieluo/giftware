@@ -19,8 +19,8 @@ trait KuaiBaoTrait
         $method = 'cloud.print.waybill';
         $ts = time();
         $appKey = '27a51dcfd28329d858b13df8dffa0ba7e0f7f7c5';
-        $address = explode(' ', $order->receipt_address);
-        $address2 = explode(' ', $order->depot->address);
+        $address = explode(' ', trim($order->receipt_address));
+        $address2 = explode(' ', trim($order->depot->address));
         if (intval($order->plattype) === 1) {
             // cn 打印机
             $agent_id = '3123977140924881';

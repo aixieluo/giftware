@@ -344,7 +344,12 @@ class Gift extends Frontend
     {
         $data = [];
         foreach (explode("\r\n", $addresses) as $address) {
-            $data[]['address'] = $address;
+            $address = trim($address);
+            $sn_length = strpos($address, ',');
+            $data[] = [
+                'sn' => substr($address, 0, $sn_length),
+                'address' => substr($address, $sn_length + 1),
+            ];
         }
         return $data;
     }

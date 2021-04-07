@@ -174,10 +174,10 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                             return;
                         }
                         adddan=addtextarr[i].split(",");
-                        addhao = adddan[1].replace(/ /g,'');
+                        addhao = adddan[2].replace(/ /g,'');
                         if(adddan.length!=3 && adddan.length!=4){layer.alert("第"+(i+1)+"个收货地址【"+addtextarr[i]+"】格式有错误，收件人号码地址用逗号分开(姓名,号码,地址)"); return; }
                         if(addhao.length!=11 && addhao.length!=14){layer.alert("第"+(i+1)+"个地址【"+addtextarr[i]+"】的手机号码格式不对，请仔细检查！"); return;}
-                        var addr_char = $.trim(adddan[2]);
+                        var addr_char = $.trim(adddan[3]);
                         var address_arr = addr_char.split(' ');
                         if(address_arr.length<4){
                             layer.alert("第"+(Number(i)+Number(1))+" 个收货地址【"+addtextarr[i]+"】格式中省、市、区或县之间应该用空格隔开，请仔细检查！");
