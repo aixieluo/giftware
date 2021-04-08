@@ -28,7 +28,13 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                         {checkbox: true},
                         // {field: 'id', title: __('ID')},
                         // {field: 'user_id', title: __('User_id')},
-                        {field: 'sn', title: '订单号', operate: 'LIKE'},
+                        {field: 'sn', title: '订单号', operate: 'LIKE', formatter: function (value) {
+                                if (!value) {
+                                    return value
+                                } else {
+                                    return "<span class='btn btn-xs btn-fuzhi btn-success' data-toggle='tooltip' title='"+value+"' >查看</span>"
+                                }
+                            }},
                         {field: 'courier_sn', title: __('Courier_sn'), operate: 'LIKE',formatter:function(value,row,index){
                                 if(!value){
                                     return value
@@ -43,7 +49,13 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template', 'table', 'clipboa
                         {field: 'recipient', title: __('Recipient'), operate: 'LIKE'},
                         {field: 'receipt_number', title: __('Receipt_number'), operate: 'LIKE'},
                         {field: 'receipt_address', title: __('Receipt_address'), operate: 'LIKE'},
-                        {field: 'reason', title: '原因', searchable:false},
+                        {field: 'reason', title: '原因', searchable:false, formatter: function (value) {
+                                if (!value) {
+                                    return value
+                                } else {
+                                    return "<span class='btn btn-xs btn-fuzhi btn-success' data-toggle='tooltip' title='"+value+"' >查看</span>"
+                                }
+                            }},
                     ]
                 ]
             });
