@@ -19,8 +19,8 @@ trait KuaiBaoTrait
         $method = 'cloud.print.waybill';
         $ts = time();
         $appKey = '27a51dcfd28329d858b13df8dffa0ba7e0f7f7c5';
-        $address = explode(' ', trim($order->receipt_address));
-        $address2 = explode(' ', trim($order->depot->address));
+        $address = explode(' ', preg_replace('/  +/', ' ', trim($order->receipt_address)));
+        $address2 = explode(' ', preg_replace('/  +/', ' ', trim($order->depot->address)));
         if (count($address) < 4 || count($address2) < 4) {
             $order->data('reason', '地址格式不正确');
             $order->save();
@@ -36,46 +36,49 @@ trait KuaiBaoTrait
             $this->error('平台选择错误');
         }
 
+        $data = [
+            'agent_id'    => $agent_id,
+            'template_id' => '666696',
+            'print_data'  => [
+                [
+                    'tid'        => $order->real_sn,
+                    'cp_code'    => 'yt',
+                    'sender'     => [
+                        'address' => [
+                            "province" => $address2[0],
+                            "city"     => $address2[1],
+                            "district" => $address2[2],
+                            "detail"   => $address2[3],
+                        ],
+                        "name"    => $user->fren ?? $user->nickname,
+                        "mobile"  => $user->fhao ?? $user->mobile,
+                    ],
+                    'recipient'  => [
+                        'address' => [
+                            "province" => $address[0],
+                            "city"     => $address[1],
+                            "district" => $address[2],
+                            "detail"   => $address[3],
+                        ],
+                        "name"    => $order->recipient,
+                        "mobile"  => $order->receipt_number,
+                    ],
+                    'goods_name' => $order->item
+                ]
+            ]
+        ];
+
+        if ($order->plattype == 2) {
+            $data['pdd_order_sn'] = $order->real_sn;
+        }
+
         $bodys = [
             "app_id" => $appId,
             "method" => $method,
             "sign"   => md5($appId . $method . $ts . $appKey),
             "ts"     => $ts,
-            "data"   => json_encode([
-                'agent_id'    => $agent_id,
-                'template_id' => '666696',
-                'print_data'  => [
-                    [
-                        'tid'        => $order->real_sn,
-                        'cp_code'    => 'yt',
-                        'sender'     => [
-                            'address' => [
-                                "province" => $address2[0],
-                                "city"     => $address2[1],
-                                "district" => $address2[2],
-                                "detail"   => $address2[3],
-                            ],
-                            "name"    => $user->fren ?? $user->nickname,
-                            "mobile"  => $user->fhao ?? $user->mobile,
-                        ],
-                        'recipient'  => [
-                            'address' => [
-                                "province" => $address[0],
-                                "city"     => $address[1],
-                                "district" => $address[2],
-                                "detail"   => $address[3],
-                            ],
-                            "name"    => $order->recipient,
-                            "mobile"  => $order->receipt_number,
-                        ],
-                        'goods_name' => $order->item
-                    ]
-                ]
-            ])
+            "data"   => json_encode($data)
         ];
-        if ($order->plattype == 2) {
-            $bodys['data']['pdd_order_sn'] = $order->real_sn;
-        }
         $bodys = http_build_query($bodys);
         $url = $host;
         $curl = curl_init();

@@ -22,7 +22,7 @@ use think\response\Json;
 class Gift extends Frontend
 {
     protected $layout = 'default';
-    protected $noNeedLogin = ['tn_fresh', 'index', 'show'];
+    protected $noNeedLogin = ['tn_fresh', 'index', 'show', 'test'];
     protected $noNeedRight = ['*'];
 
     use OrderTrait, TianNiuTrait, KuaiBaoTrait;
@@ -55,6 +55,10 @@ class Gift extends Frontend
             Cookie::delete('uid');
             Cookie::delete('token');
         });
+    }
+
+    public function test(Request $request)
+    {
     }
 
     public function index(Request $request)
