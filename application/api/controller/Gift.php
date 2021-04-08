@@ -96,12 +96,12 @@ class Gift extends Api
         }
         $this->auth->getUser()->fren = $request->post('sendname');
         $this->auth->getUser()->fhao = $request->post('sendphone');
-        $recipient = $request->post('recipient');
-        $receipt_number = $request->post('receipt_number');
-        $receipt_province = $request->post('receipt_province');
-        $receipt_city = $request->post('receipt_city');
-        $receipt_district = $request->post('receipt_district');
-        $receipt_address = $request->post('receipt_address');
+        $recipient = trim($request->post('recipient'));
+        $receipt_number = trim($request->post('receipt_number'));
+        $receipt_province = trim($request->post('receipt_province'));
+        $receipt_city = trim($request->post('receipt_city'));
+        $receipt_district = trim($request->post('receipt_district'));
+        $receipt_address = trim($request->post('receipt_address'));
         $orders = $this->generateOrder2($depot, $gift, [
             [
                 'sn'      => $request->post('sn'),
