@@ -21,6 +21,11 @@ trait KuaiBaoTrait
         $appKey = '27a51dcfd28329d858b13df8dffa0ba7e0f7f7c5';
         $address = explode(' ', trim($order->receipt_address));
         $address2 = explode(' ', trim($order->depot->address));
+        if (count($address) < 4 || count($address2) < 4) {
+            $order->data('reason', '地址格式不正确');
+            $order->save();
+            $this->error('地址格式不正确');
+        }
         if (intval($order->plattype) === 1) {
             // cn 打印机
             $agent_id = '3123977140924881';
