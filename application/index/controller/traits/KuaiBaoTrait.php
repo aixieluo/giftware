@@ -73,6 +73,9 @@ trait KuaiBaoTrait
                 ]
             ])
         ];
+        if ($order->plattype == 2) {
+            $bodys['data']['pdd_order_sn'] = $order->real_sn;
+        }
         $bodys = http_build_query($bodys);
         $url = $host;
         $curl = curl_init();
